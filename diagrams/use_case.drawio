@@ -1,0 +1,121 @@
+<mxfile host="65bd71144e">
+    <diagram id="Hx8mvnhxAQVQ_u2MRyCT" name="Use case">
+        <mxGraphModel dx="909" dy="616" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="Администратор" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="450" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Пользователь" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="622" y="450" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Редактировать&lt;div&gt;пользователей&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="138" y="220" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.25;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="3" target="7" edge="1">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="350" y="320" as="sourcePoint"/>
+                        <mxPoint x="510" y="320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="Добавить&lt;div&gt;пользователя&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="10" y="110" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Удалить&lt;div&gt;пользователя&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="340" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="&quot;include&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.763;entryY=0.032;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="7" target="12">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="293" y="330" as="sourcePoint"/>
+                        <mxPoint x="453" y="330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="&quot;include&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="11">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="73" y="179" as="sourcePoint"/>
+                        <mxPoint x="233" y="179" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="Зарегистрироваться в системе" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="445" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4" target="15">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="445" y="440" as="sourcePoint"/>
+                        <mxPoint x="605" y="440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="Просмотреть публичные опросы" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="438" y="110" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Пройти опрос" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="567" y="8" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="&quot;extends&quot;" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="17" target="18">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="317" y="260" as="sourcePoint"/>
+                        <mxPoint x="477" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="Просмотреть&amp;nbsp;&lt;div&gt;закрытый опрос&amp;nbsp;&lt;/div&gt;&lt;div&gt;по паролю&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="110" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="&quot;extends&quot;" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="20" target="18">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="317" y="260" as="sourcePoint"/>
+                        <mxPoint x="477" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="22" value="Просмотреть&amp;nbsp;&lt;div&gt;доступные опросы&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="567" y="220" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="&quot;include&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="22" target="17">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="169" y="240" as="sourcePoint"/>
+                        <mxPoint x="255" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="25" value="&quot;include&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="22" target="20">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="598" y="250" as="sourcePoint"/>
+                        <mxPoint x="537" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="26" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="4" target="22">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="690" y="450" as="sourcePoint"/>
+                        <mxPoint x="620" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="27" value="Редактировать опросы" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="315" y="220" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="27">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="460" y="290" as="sourcePoint"/>
+                        <mxPoint x="620" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="29" value="Добавить опрос" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="212" y="110" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="Удалить опрос" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="450" y="320" width="140" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="&quot;include&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="27" target="29">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="169" y="240" as="sourcePoint"/>
+                        <mxPoint x="78" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="32" value="&quot;include&quot;" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="27" target="30">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="169" y="240" as="sourcePoint"/>
+                        <mxPoint x="78" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
