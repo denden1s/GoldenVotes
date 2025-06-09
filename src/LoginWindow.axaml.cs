@@ -8,8 +8,8 @@ public partial class LoginWindow : Window
     public LoginWindow()
     {
         InitializeComponent();
-        this.Width = Configuration.WindowWidth;
-        this.Height = Configuration.WindowHeight;
+        this.Width = Settings.WindowWidth;
+        this.Height = Settings.WindowHeight;
 
     }
 }
