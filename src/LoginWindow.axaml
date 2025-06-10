@@ -1,10 +1,63 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:effects="clr-namespace:Avalonia.Media.Effects;assembly=Avalonia.Controls"
         x:Class="Golden_votes.LoginWindow"
-        Icon="/assets/icon.png"
-        Title="Golden_votes">
-    Welcome to Avalonia!
+        Icon="assets/icon.png"
+        Title="Golden Votes"
+        Width="400" Height="350"
+        WindowStartupLocation="CenterScreen">
+  
+  <!-- Global drop-shadow effect -->
+
+  <!-- Darkened background to focus the login card -->
+  <Grid Background="#FF2D2D30">
+    <Border Background="#CCFFFFFF"
+            CornerRadius="16"
+            Padding="24"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Effect="{StaticResource CardShadow}">
+      <StackPanel Name="LoginPanel" Spacing="20" Width="300">
+        <!-- Header -->
+        <TextBlock Text="Авторизация"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   Foreground="#333333" />
+
+        <!-- Login field -->
+        <StackPanel Spacing="6">
+          <TextBlock Text="Логин"
+                     FontSize="14"
+                     Foreground="#555555" />
+          <TextBox Name="LoginTextBox"
+                   Watermark="Введите логин"
+                   Height="32" />
+        </StackPanel>
+
+        <!-- Password field -->
+        <StackPanel Spacing="6">
+          <TextBlock Text="Пароль"
+                     FontSize="14"
+                     Foreground="#555555" />
+          <TextBox Name="PasswordBox"
+                   Watermark="Введите пароль"
+                   PasswordChar="●"
+                   Height="32" />
+        </StackPanel>
+
+        <!-- Login button -->
+        <Button Name="LoginButton"
+                Content="Войти"
+                FontSize="16"
+                Height="36"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="#FF007ACC"
+                Foreground="White"
+                CornerRadius="8"
+                Click="OnLoginClick" />
+      </StackPanel>
+    </Border>
+  </Grid>
 </Window>
