@@ -1,14 +1,15 @@
 using System.Security.Cryptography;
-using System;
 using System.Text;
+using System.IO;
+using System;
 
 namespace Golden_votes;
 
 public class Encryption
 {
   // RSA 1024 bit pub key
-  private string PrivateKeyPath;
-  private static readonly byte[] PublicKey = new byte[]
+  private string privateKeyPem;
+  private static readonly byte[] publicKey = new byte[]
   {
     0x30, 0x81, 0x9e, 0x30, 0x0d, 0x06, 0x09, 0x2a,
     0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01,
@@ -33,10 +34,18 @@ public class Encryption
     0x01
   };
 
+  public Encryption(string privateKeyPath)
+  {
+    using (StreamReader reader = new StreamReader(privateKeyPath))
+    {
+      privateKeyPem = reader.ReadToEnd();
+    }
+  }
+
   public string Encrypt(string plainText)
   {
     using var rsa = RSA.Create();
-    rsa.ImportSubjectPublicKeyInfo(PublicKey, out _);
+    rsa.ImportSubjectPublicKeyInfo(publicKey, out _);
 
     byte[] dataBytes = Encoding.UTF8.GetBytes(plainText);
     // Use OAEP padding with SHA-256 for security
@@ -49,7 +58,6 @@ public class Encryption
 
   public string Decrypt(string encryptedBase64)
   {
-    string privateKeyPem = LoadPrivateKey();
     byte[] encryptedBytes = Convert.FromBase64String(encryptedBase64);
 
     using var rsa = RSA.Create();
@@ -59,12 +67,6 @@ public class Encryption
                                         RSAEncryptionPadding.OaepSHA256);
 
     return Encoding.UTF8.GetString(decryptedBytes);
-  }
-
-  public string LoadPrivateKey()
-  {
-    // TODO: load from file
-    return "";
   }
 
   public string Hash(string plainText)
