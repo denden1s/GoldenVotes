@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
-namespace Golden_votes;
+namespace Golden_votes.Views;
 
 public partial class LoginWindow : Window
 {
@@ -24,5 +24,8 @@ public partial class LoginWindow : Window
     private void OnLoginClick(object? sender, RoutedEventArgs e)
     {
         // TODO: realize
+        AdminWindow win = new AdminWindow();
+        win.Show();
+        this.Hide();
     }
 }

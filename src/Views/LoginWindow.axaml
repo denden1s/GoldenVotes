@@ -1,10 +1,9 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:effects="clr-namespace:Avalonia.Media.Effects;assembly=Avalonia.Controls"
-        x:Class="Golden_votes.LoginWindow"
-        Icon="assets/icon.png"
+        x:Class="Golden_votes.Views.LoginWindow"
+        Icon="../Assets/icon.png"
         Title="Golden Votes"
-        Width="400" Height="350"
         WindowStartupLocation="CenterScreen">
   
   <!-- Global drop-shadow effect -->
@@ -17,7 +16,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Effect="{StaticResource CardShadow}">
-      <StackPanel Name="LoginPanel" Spacing="20" Width="300">
+      <StackPanel Name="LoginPanel" Spacing="20">
         <!-- Header -->
         <TextBlock Text="Авторизация"
                    FontSize="22"
