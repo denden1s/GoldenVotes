@@ -9,8 +9,7 @@ public partial class LoginWindow : Window
     private LoginWindow()
     {
         InitializeComponent();
-        this.Width = Settings.WindowWidth;
-        this.Height = Settings.WindowHeight;
+        Settings.ConfigureWindow(this);
         this.LoginPanel.Width = this.Width / 3;
         this.LoginPanel.Height = this.Height / 3.5;
         this.LoginButton.Width = this.LoginPanel.Width;

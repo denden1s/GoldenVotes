@@ -10,8 +10,7 @@ public partial class AdminWindow : Window
     public AdminWindow()
     {
         InitializeComponent();
-        this.Width = Settings.WindowWidth;
-        this.Height = Settings.WindowHeight;
+        Settings.ConfigureWindow(this);
     }
 
     private void OnVoteCreateClick(object? sender, RoutedEventArgs e)

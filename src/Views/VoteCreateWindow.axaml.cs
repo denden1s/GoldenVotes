@@ -9,7 +9,6 @@ public partial class VoteCreateWindow : Window
     public VoteCreateWindow()
     {
         InitializeComponent();
-        // this.Width = Settings.WindowWidth;
-        // this.Height = Settings.WindowHeight;
+        Settings.ConfigureWindow(this);
     }
 }
