@@ -3,7 +3,8 @@
         x:Class="Golden_votes.Views.AdminWindow"
         Title="Golden Votes"
         WindowStartupLocation="CenterScreen"
-        Icon="../Assets/icon.png">
+        Icon="../Assets/icon.png"
+        Closing="OnWindowClosing">
 
   <TabControl>
     <!-- Вкладка: Голосования -->

@@ -1,8 +1,8 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="Golden_votes.Views.VoteCreateWindow"
-             Title="Golden Votes"
-             Width="800" Height="600">
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Golden_votes.Views.VoteCreateWindow"
+        Title="Golden Votes"
+        Closing="OnWindowClosing">
 
   <Border Padding="30" Background="#FFF">
     <StackPanel Spacing="20">
@@ -67,7 +67,8 @@
               Width="300"
               Background="#007ACC"
               Foreground="White"
-              CornerRadius="8"/>
+              CornerRadius="8"
+              Click="OnSubmitVote"/>
     </StackPanel>
   </Border>
-</UserControl>
+</Window>
