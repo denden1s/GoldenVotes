@@ -17,7 +17,7 @@ public partial class LoginWindow : Window
     private void OnLoginClick(object? sender, RoutedEventArgs e)
     {
         // TODO: realize
-        AdminWindow win = AdminWindow.getInstance();
+        AdminWindow win = new AdminWindow();
         win.Show();
         this.Hide();
     }

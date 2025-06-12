@@ -18,8 +18,8 @@
         <!-- Список голосований -->
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList" Height="300" />
-          <Button Content="Создать" Width="100" Margin="0,10,0,0" HorizontalAlignment="Left" Click="OnVoteCreateClick"/>
+          <ListBox Name="VotesList"/>
+          <Button Content="Создать" HorizontalAlignment="Stretch" Click="OnVoteCreateClick" HorizontalContentAlignment="Center"/>
         </StackPanel>
 
         <!-- Статистика -->
@@ -44,10 +44,10 @@
         <!-- Список пользователей -->
         <StackPanel>
           <TextBlock Text="Пользователи:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="UsersList" Height="300" />
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
-            <Button Content="+" Width="40" Margin="0,0,5,0" />
-            <Button Content="-" Width="40" />
+          <ListBox Name="UsersList"/>
+          <StackPanel Orientation="Vertical">
+              <Button Content="+" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+              <Button Content="-" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
           </StackPanel>
         </StackPanel>
 
@@ -55,18 +55,18 @@
         <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Padding="10">
           <StackPanel Spacing="10">
             <TextBlock Text="Логин" />
-            <TextBox Text="user1" />
+            <TextBox/>
 
             <TextBlock Text="Пароль" />
             <TextBox PasswordChar="●" />
 
             <TextBlock Text="Роль пользователя" />
-            <ComboBox>
-              <ComboBoxItem Content="Админ" />
+            <ComboBox SelectedIndex="0" HorizontalAlignment="Stretch">
               <ComboBoxItem Content="Пользователь" />
+              <ComboBoxItem Content="Админ" />
             </ComboBox>
 
-            <Button Content="Создать" Width="100" Margin="0,10,0,0" HorizontalAlignment="Left" />
+            <Button Content="Создать" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
           </StackPanel>
         </Border>
       </Grid>

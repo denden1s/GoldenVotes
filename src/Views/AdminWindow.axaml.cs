@@ -11,18 +11,12 @@ public partial class AdminWindow : Window
 {
     private static AdminWindow instance;
     private VoteCreateWindow vote_window;
-    
-    private AdminWindow()
+
+    public AdminWindow()
     {
         InitializeComponent();
         Settings.ConfigureWindow(this);
-    }
-
-    public static AdminWindow getInstance()
-    {
-        if (instance == null)
-            instance = new AdminWindow();
-        return instance;
+        VotesList.Height = UsersList.Height = this.Height * 0.8;
     }
 
     private void OnVoteCreateClick(object? sender, RoutedEventArgs e)
