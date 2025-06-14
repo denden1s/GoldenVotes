@@ -1,13 +1,13 @@
 using System;
 using Avalonia.Controls;
 
-namespace Golden_votes;
+namespace Golden_votes.Utils;
 
 
 public static class Settings
 {
-  public const int WindowWidth = 1600;
-  public const int WindowHeight = 900;
+  public const int WindowWidth = 1200;
+  public const int WindowHeight = 800;
 
   public const bool IsResizableWindow = false;
 

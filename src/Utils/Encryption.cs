@@ -3,7 +3,7 @@ using System.Text;
 using System.IO;
 using System;
 
-namespace Golden_votes;
+namespace Golden_votes.Utils;
 
 public class Encryption
 {

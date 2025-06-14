@@ -1,11 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Golden_votes.Utils;
 
 namespace Golden_votes.Views;
 
 public partial class LoginWindow : Window
 {
-    private static LoginWindow instance;
     public LoginWindow()
     {
         InitializeComponent();

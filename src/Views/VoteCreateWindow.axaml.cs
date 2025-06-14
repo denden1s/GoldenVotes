@@ -2,12 +2,13 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Golden_votes.Utils;
+
 
 namespace Golden_votes.Views;
 
 public partial class VoteCreateWindow : Window
 {
-    // TODO: put parent form to this
     private AdminWindow parentWindow;
     public VoteCreateWindow(AdminWindow win)
     {
