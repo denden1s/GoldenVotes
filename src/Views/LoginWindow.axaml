@@ -39,7 +39,7 @@
           <TextBlock Text="Пароль"
                      FontSize="14"
                      Foreground="#555555" />
-          <TextBox Name="PasswordBox"
+          <TextBox Name="PasswordTextBox"
                    Watermark="Введите пароль"
                    PasswordChar="●"
                    Height="32" />
