@@ -10,7 +10,6 @@ namespace Golden_votes.Views;
 
 public partial class AdminWindow : Window
 {
-    private static AdminWindow instance;
     private VoteCreateWindow vote_window;
 
     public AdminWindow()
