@@ -7,6 +7,7 @@ namespace Golden_votes.Utils;
 
 public class Encryption
 {
+  private bool usePrivateKey = false;
   // RSA 1024 bit pub key
   private string privateKeyPem;
   private static readonly byte[] publicKey = new byte[]
@@ -34,11 +35,15 @@ public class Encryption
     0x01
   };
 
+  public Encryption()
+  {
+  }
   public Encryption(string privateKeyPath)
   {
     using (StreamReader reader = new StreamReader(privateKeyPath))
     {
       privateKeyPem = reader.ReadToEnd();
+      usePrivateKey = true;
     }
   }
 
@@ -58,6 +63,9 @@ public class Encryption
 
   public string Decrypt(string encryptedBase64)
   {
+    if (!usePrivateKey)
+      return "";
+
     byte[] encryptedBytes = Convert.FromBase64String(encryptedBase64);
 
     using var rsa = RSA.Create();
