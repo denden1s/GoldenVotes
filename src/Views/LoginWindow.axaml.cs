@@ -1,6 +1,9 @@
+using System.Data.Common;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Golden_votes.Utils;
+using Golden_votes.Utils.MessageBox;
+
 using Tmds.DBus.Protocol;
 
 namespace Golden_votes.Views;
@@ -16,7 +19,7 @@ public partial class LoginWindow : Window
     this.LoginButton.Width = this.LoginPanel.Width;
   }
 
-  private async void  OnLoginClick(object? sender, RoutedEventArgs e)
+  private async void OnLoginClick(object? sender, RoutedEventArgs e)
   {
     // setup ip of server from json
     // TODO: realize
@@ -35,5 +38,20 @@ public partial class LoginWindow : Window
     AdminWindow win = new AdminWindow();
     win.Show();
     this.Hide();
+  }
+
+  private async void SetupServerLocation(object? sender, RoutedEventArgs e)
+  {
+    string messageBoxTitle = "Server IP";
+    var serverAddress = await InputMessageBox.Show(this, messageBoxTitle, "192.168.100.1",
+                                                   "Пожалуйста введите адрес сервера БД:");
+
+    if (!DBServer.IsValidIP(serverAddress))
+    {
+      InfoMessageBox.Show(this, messageBoxTitle, "Данные введены некорректно");
+      return;
+    }
+    DBServer dBServer = new DBServer();
+    dBServer.Setup(serverAddress);
   }
 }
