@@ -20,6 +20,8 @@
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
           <ListBox Name="VotesList"/>
           <Button Content="Создать" HorizontalAlignment="Stretch" Click="OnVoteCreateClick" HorizontalContentAlignment="Center"/>
+          <Button Content="Загрузить ключ" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center"/>
+
         </StackPanel>
 
         <!-- Статистика -->
