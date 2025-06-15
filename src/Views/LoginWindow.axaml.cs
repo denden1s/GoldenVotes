@@ -18,6 +18,7 @@ public partial class LoginWindow : Window
 
   private async void  OnLoginClick(object? sender, RoutedEventArgs e)
   {
+    // setup ip of server from json
     // TODO: realize
     if (string.IsNullOrEmpty(LoginTextBox.Text) ||
         string.IsNullOrEmpty(PasswordTextBox.Text))
@@ -28,8 +29,9 @@ public partial class LoginWindow : Window
       // var result = await VariantMessageBox.Show(this, "Confirmation", "Do you want to proceed?");
     }
     Encryption enc = new Encryption();
-    // TODO: maybe salt = login
-    
+    string hash_password = enc.Hash(LoginTextBox.Text + PasswordTextBox.Text);
+    string login = enc.Encrypt(LoginTextBox.Text);
+
     AdminWindow win = new AdminWindow();
     win.Show();
     this.Hide();
