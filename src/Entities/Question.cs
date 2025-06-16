@@ -9,6 +9,5 @@ public class Question
 
   public string Name { get; set; }
 
-  public List<string> Variants;
-
+  public List<User> Users { get; set; }
 }
