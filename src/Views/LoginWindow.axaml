@@ -65,6 +65,17 @@
                 Foreground="White"
                 CornerRadius="8"
                 Click="OnLoginClick" />
+
+        <Button Name="RegisterButton"
+                Content="Зарегистрироваться"
+                FontSize="16"
+                Height="36"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="#FF007ACC"
+                Foreground="White"
+                CornerRadius="8"
+                Click="OnRegisterClick" />
       </StackPanel>
     </Border>
   </Grid>
