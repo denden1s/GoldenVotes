@@ -1,0 +1,61 @@
+@startuml
+class ApplicationContext {
+    + ApplicationContext()
+    + {static} GenerateAdmin() : void
+}
+class "DbSet`1"<T> {
+}
+DbContext <|-- ApplicationContext
+ApplicationContext --> "Users<User>" "DbSet`1"
+ApplicationContext --> "Questions<Question>" "DbSet`1"
+ApplicationContext --> "Votes<Vote>" "DbSet`1"
+class Encryption {
+    + Encryption()
+    + Encryption(privateKeyPath:string)
+    + Encrypt(plainText:string) : string
+    + Decrypt(encryptedBase64:string) : string
+    + Hash(plainText:string) : string
+}
+class Settings <<static>> {
+    + <<const>> WindowWidth : int = 1200
+    + <<const>> WindowHeight : int = 800
+    + <<const>> IsResizableWindow : bool = false
+    + <<const>> MinWindowWidth : int = 1200
+    + <<const>> MinWindowHeight : int = 800
+    + <<const>> MaxWindowWidth : int = 1920
+    + <<const>> MaxWindowHeight : int = 1080
+    + {static} ConfigureWindow(window:Window) : void
+}
+class DBServer {
+    + IP : string <<get>>
+    + Load() : void
+    + Setup(newAddress:string) : void
+    + {static} IsValidIP(ip:string) : bool
+}
+enum UserRole {
+    kBaseUser,
+    kAdmin,
+}
+class "List`1"<T> {
+}
+User --> "Role" UserRole
+User --> "Questions<Question>" "List`1"
+User +-- UserRole
+class Vote {
+    + ID : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + QuestionsCount : int <<get>>
+}
+class "List`1"<T> {
+}
+Vote --> "StartPeriod" DateTime
+Vote --> "EndPeriod" DateTime
+Vote --> "Questions<Question>" "List`1"
+class Question {
+    + ID : int <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+Question --> "Users<User>" "List`1"
+@enduml
