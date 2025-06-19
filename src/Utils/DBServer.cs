@@ -5,7 +5,7 @@ namespace Golden_votes.Utils;
 
 public class DBServer
 {
-  private string ip = "127.0.0.1";
+  private string ip = "localhost";
   private string configPath = ".settings.json";
 
   public string IP { get { return ip; } }

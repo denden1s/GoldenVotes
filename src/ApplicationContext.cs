@@ -22,8 +22,9 @@ public class ApplicationContext : DbContext
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    optionsBuilder.UseSqlServer("Server = " + ip + "\\SQLEXPRESS, 1433;" +
-        " Database = golden_votes; User ID = sa; Password = Qwerty123; TrustServerCertificate=true;");
+    optionsBuilder.UseSqlServer("Server=" + ip + "\\SQLEXPRESS01;" +
+        "Database=golden_votes;Trusted_Connection=True;TrustServerCertificate=true;");
+        //Server=localhost\SQLEXPRESS01;Database=master;Trusted_Connection=True;
   }
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -43,7 +44,7 @@ public class ApplicationContext : DbContext
     using(ApplicationContext db = new ApplicationContext())
     {
       // TODO: delete in release
-      db.Database.EnsureDeleted();
+      // db.Database.EnsureDeleted();
 
       db.Database.EnsureCreated();
       if (db.Users.IsNullOrEmpty())
