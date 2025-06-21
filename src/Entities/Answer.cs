@@ -11,12 +11,11 @@ public class Answer
 
   public List<User> Users { get; set; }
 
+  public Answer() { }
   public Answer(string name, List<User>? users = null)
   {
     Name = name;
     if (users != null)
-    {
       Users = users;
-    }
   }
 }

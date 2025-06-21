@@ -21,7 +21,7 @@ public class Vote
       return Answers.Count;
     }
   }
-
+  public Vote() { }
   public Vote(string name, List<Answer> answers, DateTime end, DateTime? start = null)
   {
     Name = name;
