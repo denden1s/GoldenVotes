@@ -18,6 +18,7 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             ApplicationContext.GenerateAdmin();
+            ApplicationContext.GenerateContent();
             desktop.MainWindow = new LoginWindow();
         }
 
