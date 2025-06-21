@@ -20,6 +20,7 @@ public class InputMessageBox : Window
     Width = 350;
     Height = 160;
     WindowStartupLocation = WindowStartupLocation.CenterOwner;
+    Settings.SetWindowsColor(this);
     CanResize = false;
 
     // Create controls
@@ -34,14 +35,16 @@ public class InputMessageBox : Window
     {
       Content = "OK",
       Width = 80,
-      Margin = new Thickness(0, 0, 5, 0)
+      Margin = new Thickness(0, 0, 5, 0),
+      Background = Settings.CreateColor("#F0DCCA")
     };
     okButton.Click += Ok_Click;
 
     var cancelButton = new Button
     {
       Content = "Cancel",
-      Width = 80
+      Width = 80,
+      Background = Settings.CreateColor("#F0DCCA")
     };
     cancelButton.Click += Cancel_Click;
 

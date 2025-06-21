@@ -10,7 +10,8 @@ public class InfoMessageBox : Window
   public InfoMessageBox(string title, string message)
   {
     this.Title = title;
-
+    WindowStartupLocation = WindowStartupLocation.CenterOwner;
+    Settings.SetWindowsColor(this);
     var panel = new StackPanel
     {
       Margin = new Thickness(10)
@@ -27,7 +28,9 @@ public class InfoMessageBox : Window
     {
       Content = "OK",
       HorizontalAlignment = HorizontalAlignment.Center,
-      Width = 100
+      Width = 100,
+      Background = Settings.CreateColor("#F0DCCA")
+      
     };
     okButton.Click += (s, e) => Close();
 

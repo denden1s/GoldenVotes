@@ -15,6 +15,7 @@ public class VariantMessageBox : Window
   {
     this.Title = title;
     this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+    Settings.SetWindowsColor(this);
 
     var panel = new StackPanel
     {
@@ -39,14 +40,16 @@ public class VariantMessageBox : Window
     var yesButton = new Button
     {
       Content = "Yes",
-      Width = 80
+      Width = 80,
+      Background = Settings.CreateColor("#F0DCCA")
     };
     yesButton.Click += (s, e) => { Result = true; Close(); };
 
     var noButton = new Button
     {
       Content = "No",
-      Width = 80
+      Width = 80,
+      Background = Settings.CreateColor("#F0DCCA")
     };
     noButton.Click += (s, e) => { Result = false; Close(); };
 
