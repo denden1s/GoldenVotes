@@ -29,19 +29,27 @@ public partial class LoginWindow : Window
     if (string.IsNullOrEmpty(LoginTextBox.Text) ||
         string.IsNullOrEmpty(PasswordTextBox.Text))
     {
-      InfoMessageBox.Show(this, "Information", "Необходимо ввести логин и пароль!");
+      InfoMessageBox.Show(this, "Информация", "Необходимо ввести логин и пароль!");
       return;
     }
     User user = new User(LoginTextBox.Text, PasswordTextBox.Text);
+    User? tpm_user;
     using (ApplicationContext db = new ApplicationContext())
     {
-      if (db.Users.Where(u => u.ID == user.ID).FirstOrDefault() == null)
+      tpm_user = db.Users.Where(u => u.ID == user.ID).FirstOrDefault();
+      if (tpm_user == null)
       {
-        InfoMessageBox.Show(this, "Information", $"Пользователь {LoginTextBox.Text} отсутствует в системе!");
+        InfoMessageBox.Show(this, "Ошибка", $"Пользователь {LoginTextBox.Text} отсутствует в системе");
         return;
       }
+      user.Role = tpm_user.Role;
     }
-    Window childWindow = user.Role == User.UserRole.kBaseUser ? new AdminWindow() : // TODO: realize user window which take user object in constructor
+    if (user.Password != tpm_user.Password)
+    {
+      InfoMessageBox.Show(this, "Ошибка", "Введен неверный пароль");
+      return;
+    }
+    Window childWindow = user.Role == User.UserRole.kBaseUser ? new UserWindow() : // TODO: realize user window which take user object in constructor
                                                                 new AdminWindow();
     childWindow.Show();
     this.Hide();
@@ -54,20 +62,14 @@ public partial class LoginWindow : Window
     if (string.IsNullOrEmpty(LoginTextBox.Text) ||
         string.IsNullOrEmpty(PasswordTextBox.Text))
     {
-      InfoMessageBox.Show(this, "Information", "Необходимо ввести логин и пароль!");
+      InfoMessageBox.Show(this, "Ошибка", "Необходимо ввести логин и пароль");
       return;
     }
-    User user = new User(LoginTextBox.Text, PasswordTextBox.Text);
-    using (ApplicationContext db = new ApplicationContext())
-    {
-      if (db.Users.Where(u => u.ID == user.ID).FirstOrDefault() != null)
-      {
-        InfoMessageBox.Show(this, "Information", $"Пользователь {LoginTextBox.Text} уже существует!");
-        return;
-      }
-      db.Users.Add(user);
-      db.SaveChanges();
-    }
+    if (ApplicationContext.AddUser(new User(LoginTextBox.Text, PasswordTextBox.Text)))
+      InfoMessageBox.Show(this, "Информация", "Регистрация прошла успешно");
+    else
+      InfoMessageBox.Show(this, "Ошибка", $"Пользователь {LoginTextBox.Text} уже существует");
+
     LoginTextBox.Clear();
     PasswordTextBox.Clear();
   }
