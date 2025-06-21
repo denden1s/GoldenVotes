@@ -4,10 +4,14 @@
         Title="Golden Votes"
         WindowStartupLocation="CenterScreen"
         Icon="../Assets/icon.png"
-        Closing="">
+        Closing="OnWindowClosing">
 
   <TabControl>
-    <!-- Вкладка: Голосования -->
+     <TabControl.Styles>
+      <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
+			<Setter Property="Background" Value="#6F9283"/>
+		</Style>
+    </TabControl.Styles>
     <TabItem Header="Голосования">
       <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -18,17 +22,17 @@
         <!-- Список голосований -->
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList"/>
-          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center"/>
+          <ListBox Name="VotesList" Background="#9EAD99"/>
+          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
         </StackPanel>
 
         <!-- Статистика -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
+        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Background="#9EAD99">
           <TextBlock Text="Статистика по голосованию"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Center"
                      FontStyle="Italic"
-                     Foreground="Gray" />
+                     Foreground="White" />
         </Border>
       </Grid>
     </TabItem>

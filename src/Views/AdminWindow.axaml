@@ -7,6 +7,11 @@
         Closing="OnWindowClosing">
 
   <TabControl>
+    <TabControl.Styles>
+      <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
+			<Setter Property="Background" Value="#6F9283"/>
+		</Style>
+    </TabControl.Styles>
     <!-- Вкладка: Голосования -->
     <TabItem Header="Голосования">
       <Grid Margin="10">
@@ -18,19 +23,17 @@
         <!-- Список голосований -->
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList"/>
-          <Button Content="Создать" HorizontalAlignment="Stretch" Click="OnVoteCreateClick" HorizontalContentAlignment="Center"/>
-          <Button Content="Загрузить ключ" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center"/>
-
+          <ListBox Name="VotesList" Background="#9EAD99"/>
+          <Button Content="Создать" HorizontalAlignment="Stretch" Click="OnVoteCreateClick" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
         </StackPanel>
 
         <!-- Статистика -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
+        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Background="#9EAD99">
           <TextBlock Text="Статистика по голосованию"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Center"
                      FontStyle="Italic"
-                     Foreground="Gray" />
+                     Foreground="White" />
         </Border>
       </Grid>
     </TabItem>
@@ -46,29 +49,49 @@
         <!-- Список пользователей -->
         <StackPanel>
           <TextBlock Text="Пользователи:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="UsersList"/>
+          <ListBox Name="UsersList" Background="#9EAD99">
+            <ListBox.Styles>
+              <Style Selector="ListBoxItem">
+                <Setter Property="BorderBrush" Value="#6F9283"/>
+                <Setter Property="BorderThickness" Value="1"/> 
+                <Setter Property="Margin" Value="2"/>        
+                <Setter Property="Padding" Value="5"/>       
+                <Setter Property="Template">
+                    <ControlTemplate>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Padding="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter>
+              </Style>
+            </ListBox.Styles>
+          </ListBox>
           <StackPanel Orientation="Vertical">
-              <Button Content="+" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-              <Button Content="-" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+              <Button Content="Загрузить ключ" HorizontalAlignment="Stretch" Click="OnLoadKeyClick" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="LoadKeyButton"/>
+              <Button Content="Удалить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="DeleteUserButton" Click="OnDeleteUserButton"/>
           </StackPanel>
         </StackPanel>
 
         <!-- Форма создания пользователя -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Padding="10">
+        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10">
           <StackPanel Spacing="10">
             <TextBlock Text="Логин" />
-            <TextBox/>
+            <TextBox Name="UserLoginTextBox" />
 
             <TextBlock Text="Пароль" />
-            <TextBox PasswordChar="●" />
+            <TextBox PasswordChar="●" Name="UserPasswordTextBox" />
 
             <TextBlock Text="Роль пользователя" />
-            <ComboBox SelectedIndex="0" HorizontalAlignment="Stretch">
+            <ComboBox SelectedIndex="0" HorizontalAlignment="Stretch" Name="UserRoleComboBox">
               <ComboBoxItem Content="Пользователь" />
-              <ComboBoxItem Content="Админ" />
+              <ComboBoxItem Content="Администратор" />
             </ComboBox>
 
-            <Button Content="Создать" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" />
+            <Button Content="Создать" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#F0DCCA" Click="OnUserCreateClick" Name="UserCreateButton"/>
           </StackPanel>
         </Border>
       </Grid>
