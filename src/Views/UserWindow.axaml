@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Golden_votes.Views.UserWindow"
+        Title="Golden Votes"
+        WindowStartupLocation="CenterScreen"
+        Icon="../Assets/icon.png"
+        Closing="">
+
+  <TabControl>
+    <!-- Вкладка: Голосования -->
+    <TabItem Header="Голосования">
+      <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Список голосований -->
+        <StackPanel>
+          <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
+          <ListBox Name="VotesList"/>
+          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Статистика -->
+        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Gray" BorderThickness="1" CornerRadius="10">
+          <TextBlock Text="Статистика по голосованию"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Center"
+                     FontStyle="Italic"
+                     Foreground="Gray" />
+        </Border>
+      </Grid>
+    </TabItem>
+  </TabControl>
+</Window>
