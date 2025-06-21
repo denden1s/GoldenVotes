@@ -18,7 +18,7 @@ public class User
   public string Password { get; set; }
   public UserRole Role { get; set; }
 
-  public List<Question> Questions { get; set; }
+  public List<Answer> Answers { get; set; }
 
   public User() { }
   public User(string login, string password, UserRole role = UserRole.kBaseUser)

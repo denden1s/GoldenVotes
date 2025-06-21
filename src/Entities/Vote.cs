@@ -7,19 +7,26 @@ public class Vote
 {
   public int ID { get; set; }
   public string Name { get; set; }
-  
-  public DateTime StartPeriod { get; set;}
 
-  public DateTime EndPeriod { get; set;}
+  public DateTime StartPeriod { get; set; }
 
-  public List<Question> Questions { get; set; }
+  public DateTime EndPeriod { get; set; }
 
-  public int QuestionsCount
+  public List<Answer> Answers { get; set; }
+
+  public int AnswersCount
   {
     get
     {
-      return Questions.Count;
+      return Answers.Count;
     }
   }
 
+  public Vote(string name, List<Answer> answers, DateTime end, DateTime? start = null)
+  {
+    Name = name;
+    Answers = answers;
+    StartPeriod = start ?? DateTime.Now;
+    EndPeriod = end;
+  }
 }

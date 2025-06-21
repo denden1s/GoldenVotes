@@ -7,7 +7,7 @@ class "DbSet`1"<T> {
 }
 DbContext <|-- ApplicationContext
 ApplicationContext --> "Users<User>" "DbSet`1"
-ApplicationContext --> "Questions<Question>" "DbSet`1"
+ApplicationContext --> "Answers<Answer>" "DbSet`1"
 ApplicationContext --> "Votes<Vote>" "DbSet`1"
 class Encryption {
     + Encryption()
@@ -39,23 +39,23 @@ enum UserRole {
 class "List`1"<T> {
 }
 User --> "Role" UserRole
-User --> "Questions<Question>" "List`1"
+User --> "Answers<Answer>" "List`1"
 User +-- UserRole
 class Vote {
     + ID : int <<get>> <<set>>
     + Name : string <<get>> <<set>>
-    + QuestionsCount : int <<get>>
+    + AnswersCount : int <<get>>
 }
 class "List`1"<T> {
 }
 Vote --> "StartPeriod" DateTime
 Vote --> "EndPeriod" DateTime
-Vote --> "Questions<Question>" "List`1"
-class Question {
+Vote --> "Answers<Answer>" "List`1"
+class Answer {
     + ID : int <<get>> <<set>>
     + Name : string <<get>> <<set>>
 }
 class "List`1"<T> {
 }
-Question --> "Users<User>" "List`1"
+Answer --> "Users<User>" "List`1"
 @enduml

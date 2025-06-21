@@ -14,7 +14,7 @@
                  HorizontalAlignment="Center"/>
 
       <!-- Вопрос голосования -->
-      <TextBox Name="QuestionBox"
+      <TextBox Name="AnswerBox"
                Watermark="Какой язык программирования самый простой?"
                FontSize="16"
                Height="40"/>
