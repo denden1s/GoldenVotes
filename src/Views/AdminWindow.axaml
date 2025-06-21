@@ -77,7 +77,7 @@
         </StackPanel>
 
         <!-- Форма создания пользователя -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10">
+        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Padding="10">
           <StackPanel Spacing="10">
             <TextBlock Text="Логин" />
             <TextBox Name="UserLoginTextBox" />

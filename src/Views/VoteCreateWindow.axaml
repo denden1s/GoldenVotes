@@ -27,7 +27,7 @@
                    Margin="0,0,0,10"/>
 
         <!-- Ограничение высоты + прокрутка -->
-        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10" Height="200">
+        <Border BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Padding="10" Height="200">
           <ScrollViewer>
             <StackPanel Name="AnswersPanel" Spacing="10">
               <TextBox Watermark="Вариант A" />
