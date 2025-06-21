@@ -16,7 +16,7 @@ public static class Settings
   public const int MaxWindowWidth = 1920;
   public const int MaxWindowHeight = 1080;
 
-
+  // color pallete: https://coolors.co/696d7d-6f9283-9ead99-cdc6a5-f0dcca
   public static SolidColorBrush CreateColor(string hex_color)
   {
      var color = Avalonia.Media.Color.Parse(hex_color);
