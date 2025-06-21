@@ -4,7 +4,7 @@ using Golden_votes.Entities;
 using Golden_votes.Utils;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Golden_votes;
 
@@ -25,7 +25,7 @@ public class ApplicationContext : DbContext
   {
     optionsBuilder.UseSqlServer("Server=" + ip + "\\SQLEXPRESS;" +
         "Database=golden_votes;Trusted_Connection=True;TrustServerCertificate=true;");
-        //Server=localhost\SQLEXPRESS01;Database=master;Trusted_Connection=True;
+    //Server=localhost\SQLEXPRESS01;Database=master;Trusted_Connection=True;
   }
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -98,4 +98,37 @@ public class ApplicationContext : DbContext
       }
     }
   }
+
+  public static List<User> LoadUsers(User.UserRole role = User.UserRole.kBaseUser)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+      return db.Users.Where(user => user.Role == role).ToList();
+  }
+
+  public static bool DeleteUser(string user_id)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+    {
+      User user = db.Users.Where(u => u.ID == user_id).FirstOrDefault();
+      if (user == null)
+        return false;
+
+      db.Users.Remove(user);
+      db.SaveChanges();
+    }
+    return true;
+  } 
+ 
+  public static bool AddUser(User user)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+    {
+      if (db.Users.Where(u => u.ID == user.ID).FirstOrDefault() != null)
+        return false;
+
+      db.Users.Add(user);
+      db.SaveChanges();
+    }
+    return true;
+  }  
 }
