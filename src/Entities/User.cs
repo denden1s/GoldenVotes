@@ -21,6 +21,13 @@ public class User
   public List<Answer> Answers { get; set; }
 
   public User() { }
+
+  public User(string login)
+  {
+    Encryption enc = new Encryption();
+    ID = enc.Hash(login + id_salt);
+  }
+
   public User(string login, string password, UserRole role = UserRole.kBaseUser)
   {
     Encryption enc = new Encryption();
