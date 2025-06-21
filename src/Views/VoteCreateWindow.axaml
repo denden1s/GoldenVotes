@@ -4,7 +4,7 @@
         Title="Golden Votes"
         Closing="OnWindowClosing">
 
-  <Border Padding="30" Background="#FFF">
+  <Border Padding="30" VerticalAlignment="Center">
     <StackPanel Spacing="20">
       
       <!-- Заголовок -->
@@ -27,7 +27,7 @@
                    Margin="0,0,0,10"/>
 
         <!-- Ограничение высоты + прокрутка -->
-        <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Padding="10" Height="200">
+        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Padding="10" Height="200">
           <ScrollViewer>
             <StackPanel Name="AnswersPanel" Spacing="10">
               <TextBox Watermark="Вариант A" />
@@ -37,7 +37,7 @@
         </Border>
 
         <!-- Кнопка добавления -->
-        <Button Content="+" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+        <Button Content="+" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
       </StackPanel>
 
       <!-- Период голосования -->
@@ -60,13 +60,12 @@
 
       <!-- Кнопка отправки -->
       <Button Content="Добавить голосование"
+              HorizontalContentAlignment="Center"
               FontSize="16"
               Height="45"
               Margin="0,20,0,0"
-              HorizontalAlignment="Center"
-              Width="300"
-              Background="#007ACC"
-              Foreground="White"
+              Background="#F0DCCA"
+              HorizontalAlignment="Stretch"
               CornerRadius="8"
               Click="OnSubmitVote"/>
     </StackPanel>
