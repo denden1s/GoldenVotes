@@ -1,22 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Golden_votes.Entities;
 using Golden_votes.Utils;
-using HarfBuzzSharp;
 using Microsoft.IdentityModel.Tokens;
-using Avalonia.Controls;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore;
-using System.Collections.Generic;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
 
 namespace Golden_votes.Views;
 
@@ -31,20 +20,14 @@ public partial class AdminWindow : Window
 
   private bool first_load = true;
 
+  private Chart pieChart;
+
   private void LoadPieChart(List<Answer> answers)
   {
-    var pieSeries = new List<ISeries>();
-    foreach (var answer in answers)
-    {
-      PieSeries<int> series = new PieSeries<int>
-      {
-        Values = new int[] { answer.Users.Count },
-        Name = answer.Name
-      };
-      pieSeries.Add(series);
-    }
-    PieStat.Series = pieSeries;
-    PieStat.CoreChart.Update();
+    if (pieChart == null || answers.Count() == 0)
+      return;
+
+    pieChart.LoadData(answers);
   }
 
   public AdminWindow()
@@ -57,6 +40,7 @@ public partial class AdminWindow : Window
     encryption = null;
     DeleteUserButton.IsEnabled = false;
     UserCreateButton.IsEnabled = false;
+    pieChart = new Chart(ref PieStat);
 
     UsersList.Items.Add("Загрузите ключ для просмотра пользователей");
     users = ApplicationContext.LoadUsers();
