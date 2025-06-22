@@ -11,6 +11,12 @@ using Golden_votes.Entities;
 using Golden_votes.Utils;
 using HarfBuzzSharp;
 using Microsoft.IdentityModel.Tokens;
+using Avalonia.Controls;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
+using System.Collections.Generic;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace Golden_votes.Views;
 
@@ -19,17 +25,47 @@ public partial class AdminWindow : Window
   private VoteCreateWindow vote_window;
   private List<User> users;
   private Encryption? encryption;
+
+  private void LoadPieChart()
+  {
+    var pieSeries = new List<PieSeries<double>>
+    {
+      new PieSeries<double>
+      {
+        Values = new double[] { 30 },
+        Name = "C#",
+        Fill = new SolidColorPaint(SKColors.Blue)
+      },
+      new PieSeries<double>
+      {
+        Values = new double[] { 20 },
+        Name = "Python",
+        Fill = new SolidColorPaint(SKColors.Green)
+      },
+      new PieSeries<double>
+      {
+        Values = new double[] { 50 },
+        Name = "C++",
+        Fill = new SolidColorPaint(SKColors.Red)
+      }
+    };
+    PieStat.Series = pieSeries;
+  }
+
   public AdminWindow()
   {
     InitializeComponent();
+    LoadPieChart();
     Settings.ConfigureWindow(this);
     VotesList.Height = UsersList.Height = this.Height * 0.8;
+    PieStat.Width = this.Width * 0.8;
+    PieStat.Height = this.Height * 0.8;
     encryption = null;
     DeleteUserButton.IsEnabled = false;
     UserCreateButton.IsEnabled = false;
 
     UsersList.Items.Add("Загрузите ключ для просмотра пользователей");
-    users = ApplicationContext.LoadUsers(); 
+    users = ApplicationContext.LoadUsers();
   }
 
   private void LoadUsersInListBox()
