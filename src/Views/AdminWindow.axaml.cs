@@ -22,43 +22,35 @@ namespace Golden_votes.Views;
 
 public partial class AdminWindow : Window
 {
+  private int VoteNameLength = 50;
   private VoteCreateWindow vote_window;
   private List<User> users;
+  private List<Vote> votes;
+
   private Encryption? encryption;
 
-  private void LoadPieChart()
+  private void LoadPieChart(List<Answer> answers)
   {
-    var pieSeries = new List<PieSeries<double>>
+    var pieSeries = new List<ISeries>();
+    foreach (var answer in answers)
     {
-      new PieSeries<double>
+      PieSeries<int> series = new PieSeries<int>
       {
-        Values = new double[] { 30 },
-        Name = "C#",
-        Fill = new SolidColorPaint(SKColors.Blue)
-      },
-      new PieSeries<double>
-      {
-        Values = new double[] { 20 },
-        Name = "Python",
-        Fill = new SolidColorPaint(SKColors.Green)
-      },
-      new PieSeries<double>
-      {
-        Values = new double[] { 50 },
-        Name = "C++",
-        Fill = new SolidColorPaint(SKColors.Red)
-      }
-    };
+        Values = new int[] { answer.Users.Count },
+        Name = answer.Name
+      };
+      pieSeries.Add(series);
+    }
     PieStat.Series = pieSeries;
+    PieStat.CoreChart.Update();
   }
 
   public AdminWindow()
   {
     InitializeComponent();
-    LoadPieChart();
     Settings.ConfigureWindow(this);
     VotesList.Height = UsersList.Height = this.Height * 0.8;
-    PieStat.Width = this.Width * 0.8;
+    PieStat.Width = this.Width * 0.6;
     PieStat.Height = this.Height * 0.8;
     encryption = null;
     DeleteUserButton.IsEnabled = false;
@@ -66,6 +58,23 @@ public partial class AdminWindow : Window
 
     UsersList.Items.Add("Загрузите ключ для просмотра пользователей");
     users = ApplicationContext.LoadUsers();
+    votes = ApplicationContext.LoadVotes();
+    foreach (var vote in votes)
+      vote.LoadAnswers();
+    LoadVotesInListBox();
+  }
+
+  private void LoadVotesInListBox()
+  {
+    VotesList.Items.Clear();
+    foreach (var vote in votes)
+    {
+      int len = VoteNameLength < vote.Name.Length ? VoteNameLength : vote.Name.Length;
+      string name = len == VoteNameLength ? vote.Name.Substring(0, VoteNameLength) + "..." :
+                                            vote.Name;
+      VotesList.Items.Add(name);
+
+    }
   }
 
   private void LoadUsersInListBox()
@@ -173,5 +182,19 @@ public partial class AdminWindow : Window
   {
     this.Show();
     vote_win.Hide();
+  }
+
+  private void VotesList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+  {
+    if (VotesList.SelectedItem is string selected)
+    {
+      string name = selected.Contains("...") ? selected.Substring(0, VoteNameLength) : selected;
+      var vote = votes.Where(vote => vote.Name.Contains(name)).FirstOrDefault();
+      if (vote != null)
+      {
+        VoteQuestion.Text = vote.Name;
+        LoadPieChart(vote.Answers);
+      }
+    }
   }
 }
