@@ -29,4 +29,10 @@ public class Vote
     StartPeriod = start ?? DateTime.Now;
     EndPeriod = end;
   }
+  public void LoadAnswers()
+  {
+    Answers = ApplicationContext.LoadAnswers(this);
+    foreach (var answer in Answers)
+      answer.LoadUsers();
+  }
 }
