@@ -29,15 +29,13 @@
         <!-- Ограничение высоты + прокрутка -->
         <Border BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Padding="10" Height="200">
           <ScrollViewer>
-            <StackPanel Name="AnswersPanel" Spacing="10">
-              <TextBox Watermark="Вариант A" />
-              <TextBox Watermark="Вариант B" />
-            </StackPanel>
+            <StackPanel Name="AnswersPanel" Spacing="10"/>
           </ScrollViewer>
         </Border>
 
         <!-- Кнопка добавления -->
-        <Button Content="+" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
+        <Button Content="+" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Background="#F0DCCA" Click="OnAddTextBoxClick"/>
+        <Button Content="-" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Background="#F0DCCA" Click="OnDelTextBoxClick"/>
       </StackPanel>
 
       <!-- Период голосования -->
