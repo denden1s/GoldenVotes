@@ -47,11 +47,11 @@
         <StackPanel Orientation="Horizontal" Spacing="40">
           <StackPanel>
             <TextBlock Text="Начало"/>
-            <DatePicker Name="StartDate" Width="140"/>
+            <DatePicker Name="StartDate" DayFormat="ddd dd"/>
           </StackPanel>
           <StackPanel>
             <TextBlock Text="Окончание"/>
-            <DatePicker Name="EndDate" Width="140"/>
+            <DatePicker Name="EndDate" DayFormat="ddd dd" />
           </StackPanel>
         </StackPanel>
       </StackPanel>

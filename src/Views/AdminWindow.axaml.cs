@@ -29,6 +29,8 @@ public partial class AdminWindow : Window
 
   private Encryption? encryption;
 
+  private bool first_load = true;
+
   private void LoadPieChart(List<Answer> answers)
   {
     var pieSeries = new List<ISeries>();
@@ -62,6 +64,7 @@ public partial class AdminWindow : Window
     foreach (var vote in votes)
       vote.LoadAnswers();
     LoadVotesInListBox();
+    first_load = false;
   }
 
   private void LoadVotesInListBox()
@@ -178,6 +181,16 @@ public partial class AdminWindow : Window
     Environment.Exit(0);
   }
 
+  protected override void OnOpened(EventArgs e)
+  {
+    base.OnOpened(e);
+    if (first_load)
+      return;
+    votes = ApplicationContext.LoadVotes();
+    foreach (var vote in votes)
+      vote.LoadAnswers();
+    LoadVotesInListBox();
+  }
   public void CloseVoteWindow(VoteCreateWindow vote_win)
   {
     this.Show();

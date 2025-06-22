@@ -149,4 +149,17 @@ public class ApplicationContext : DbContext
     using (ApplicationContext db = new ApplicationContext())
       return db.Answers.Where(answer => answer.VoteID == concrete_vote.ID).ToList();
   }
+
+  public static bool AddVote(Vote vote)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+    {
+      if (db.Votes.Where(v => v.Name == vote.Name).Count() > 0)
+        return false;
+
+      db.Votes.Add(vote);
+      db.SaveChanges();
+    }
+    return true;
+  }
 }

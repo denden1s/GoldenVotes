@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Layout;
+using System.Threading.Tasks;
+using System;
 
 namespace Golden_votes.Utils;
 public class InfoMessageBox : Window
@@ -42,9 +44,13 @@ public class InfoMessageBox : Window
   }
 
   // Helper method to show the message box
-  public static void Show(Window parent, string title, string message)
-  {
+public static void Show(Window parent, string title, string message, Action? onClose = null)
+{
     var msgBox = new InfoMessageBox(title, message);
-    msgBox.ShowDialog(parent);
-  }
+    msgBox.ShowDialog(parent).ContinueWith(_ =>
+    {
+        // Code here runs after the dialog is closed
+        onClose?.Invoke();
+    }, TaskScheduler.FromCurrentSynchronizationContext());
+}
 }
