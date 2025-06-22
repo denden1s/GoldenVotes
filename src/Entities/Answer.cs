@@ -7,6 +7,8 @@ public class Answer
 {
   public int ID { get; set; }
 
+  public int VoteID { get; set; }
+
   public string Name { get; set; }
 
   public List<User> Users { get; set; }
@@ -17,5 +19,10 @@ public class Answer
     Name = name;
     if (users != null)
       Users = users;
+  }
+
+  public void LoadUsers()
+  {
+    Users = ApplicationContext.LoadUsers(this);
   }
 }
