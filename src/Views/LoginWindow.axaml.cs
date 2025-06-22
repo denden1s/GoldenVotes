@@ -49,7 +49,7 @@ public partial class LoginWindow : Window
       InfoMessageBox.Show(this, "Ошибка", "Введен неверный пароль");
       return;
     }
-    Window childWindow = user.Role == User.UserRole.kBaseUser ? new UserWindow() : // TODO: realize user window which take user object in constructor
+    Window childWindow = user.Role == User.UserRole.kBaseUser ? new UserWindow(user) :
                                                                 new AdminWindow();
     childWindow.Show();
     this.Hide();
