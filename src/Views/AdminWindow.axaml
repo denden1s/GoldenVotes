@@ -24,14 +24,15 @@
         <!-- Список голосований -->
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList" Background="#9EAD99"/>
+          <ListBox Name="VotesList" Background="#9EAD99" SelectionChanged="VotesList_SelectionChanged"/>
           <Button Content="Создать" HorizontalAlignment="Stretch" Click="OnVoteCreateClick" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
         </StackPanel>
 
         <!-- Статистика -->
         <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" >
         <StackPanel>
-            <TextBlock Text="Programming Language Popularity"
+            <TextBlock Text="Вопрос для голосования"
+                       Name="VoteQuestion"
                        FontSize="20"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
