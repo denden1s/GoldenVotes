@@ -55,27 +55,7 @@
         <!-- Список пользователей -->
         <StackPanel>
           <TextBlock Text="Пользователи:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="UsersList" Background="#9EAD99">
-            <ListBox.Styles>
-              <Style Selector="ListBoxItem">
-                <Setter Property="BorderBrush" Value="#6F9283"/>
-                <Setter Property="BorderThickness" Value="1"/> 
-                <Setter Property="Margin" Value="2"/>        
-                <Setter Property="Padding" Value="5"/>       
-                <Setter Property="Template">
-                    <ControlTemplate>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            Padding="{TemplateBinding Padding}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter>
-              </Style>
-            </ListBox.Styles>
-          </ListBox>
+          <ListBox Name="UsersList" Background="#9EAD99" />
           <StackPanel Orientation="Vertical">
               <Button Content="Загрузить ключ" HorizontalAlignment="Stretch" Click="OnLoadKeyClick" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="LoadKeyButton"/>
               <Button Content="Удалить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="DeleteUserButton" Click="OnDeleteUserButton"/>

@@ -105,7 +105,7 @@ public class ApplicationContext : DbContext
   {
     using (ApplicationContext db = new ApplicationContext())
     {
-      List<User> users = db.Users.Where(user => user.Role == User.UserRole.kBaseUser).ToList();
+      // List<User> users = db.Users.Where(user => user.Role == User.UserRole.kBaseUser).ToList();
       return db.Answers.Include(a => a.Users).FirstOrDefault(user => user.ID == answer.ID).Users;
     }
   }
@@ -144,10 +144,31 @@ public class ApplicationContext : DbContext
       return db.Votes.ToList();
   }
 
+  public static List<Vote> LoadActualVotes()
+  {
+    using (ApplicationContext db = new ApplicationContext())
+      return db.Votes.Where(vote => vote.EndPeriod > DateTime.Now).ToList();
+  }
+
+  public static List<Vote> LoadActualVotes(Answer answer)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+      return db.Votes.Where(vote => vote.EndPeriod > DateTime.Now && vote.Answers.Contains(answer)).ToList();
+  }
+
   public static List<Answer> LoadAnswers(Vote concrete_vote)
   {
     using (ApplicationContext db = new ApplicationContext())
       return db.Answers.Where(answer => answer.VoteID == concrete_vote.ID).ToList();
+  }
+
+  public static List<Answer> LoadAnswers(User user)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+    {
+      User? usr = db.Users.Include(u => u.Answers).Where(usr => usr.ID == user.ID).FirstOrDefault();
+      return usr != null ? usr.Answers : new List<Answer>();
+    }
   }
 
   public static bool AddVote(Vote vote)
@@ -162,4 +183,5 @@ public class ApplicationContext : DbContext
     }
     return true;
   }
+  
 }

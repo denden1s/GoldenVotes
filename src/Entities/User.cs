@@ -7,6 +7,9 @@ namespace Golden_votes.Entities;
 public class User
 {
   private const string id_salt = "golden_votes";
+
+  private List<Vote> passed_votes;
+  
   public enum UserRole
   {
     kBaseUser,
@@ -31,9 +34,18 @@ public class User
   public User(string login, string password, UserRole role = UserRole.kBaseUser)
   {
     Encryption enc = new Encryption();
+    passed_votes = new List<Vote>();
     ID = enc.Hash(login + id_salt);
     Login = enc.Encrypt(login);
     Password = enc.Hash(login + password);
     Role = role;
+  }
+  public void LoadAnswers()
+  {
+    Answers = ApplicationContext.LoadAnswers(this);
+    foreach (var answer in Answers)
+    {
+      passed_votes.AddRange(ApplicationContext.LoadActualVotes(answer));
+    }
   }
 }

@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Golden_votes.Views.UserWindow"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
         Title="Golden Votes"
         WindowStartupLocation="CenterScreen"
         Icon="../Assets/icon.png"
@@ -22,18 +23,27 @@
         <!-- Список голосований -->
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList" Background="#9EAD99"/>
-          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
+          <ListBox Name="VotesList" Background="#9EAD99" SelectionChanged="VotesList_SelectionChanged"/>
+          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="VoteButton"/>
         </StackPanel>
 
         <!-- Статистика -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Background="#9EAD99">
-          <TextBlock Text="Статистика по голосованию"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center"
-                     FontStyle="Italic"
-                     Foreground="White" />
-        </Border>
+       <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" >
+        <StackPanel>
+            <TextBlock Text="Вопрос для голосования"
+                       Name="VoteQuestion"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,10" />
+            <lvc:PieChart x:Name="PieStat"
+                          HorizontalAlignment="Center"/>
+          <TextBlock Name="EndDate" FontWeight="Bold" Margin="5,0,0,5" />
+            <ScrollViewer Height="180">
+              <StackPanel Name="AnswersPanel" Spacing="10"/>
+            </ScrollViewer>
+        </StackPanel>
+      </Border>
       </Grid>
     </TabItem>
   </TabControl>
