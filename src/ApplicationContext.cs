@@ -25,7 +25,6 @@ public class ApplicationContext : DbContext
   {
     optionsBuilder.UseSqlServer("Server=" + ip + "\\SQLEXPRESS;" +
         "Database=golden_votes;Trusted_Connection=True;TrustServerCertificate=true;");
-    //Server=localhost\SQLEXPRESS01;Database=master;Trusted_Connection=True;
   }
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -38,13 +37,10 @@ public class ApplicationContext : DbContext
     modelBuilder.Entity<Vote>().HasKey(vote => vote.ID);
 
     modelBuilder.Entity<Vote>().HasMany(vote => vote.Answers);
-
   }
 
   public static void GenerateContent()
   {
-    // TODO: realize generating content like carsharing
-
     // Users
     List<User> users = new List<User>();
     users.Add(new User("di", "Pass@123"));
@@ -105,11 +101,20 @@ public class ApplicationContext : DbContext
       return db.Users.Where(user => user.Role == role).ToList();
   }
 
+  public static List<User> LoadUsers(Answer answer)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+    {
+      List<User> users = db.Users.Where(user => user.Role == User.UserRole.kBaseUser).ToList();
+      return db.Answers.Include(a => a.Users).FirstOrDefault(user => user.ID == answer.ID).Users;
+    }
+  }
+
   public static bool DeleteUser(string user_id)
   {
     using (ApplicationContext db = new ApplicationContext())
     {
-      User user = db.Users.Where(u => u.ID == user_id).FirstOrDefault();
+      User? user = db.Users.Where(u => u.ID == user_id).FirstOrDefault();
       if (user == null)
         return false;
 
@@ -117,8 +122,8 @@ public class ApplicationContext : DbContext
       db.SaveChanges();
     }
     return true;
-  } 
- 
+  }
+
   public static bool AddUser(User user)
   {
     using (ApplicationContext db = new ApplicationContext())
@@ -130,5 +135,18 @@ public class ApplicationContext : DbContext
       db.SaveChanges();
     }
     return true;
-  }  
+  }
+
+
+  public static List<Vote> LoadVotes()
+  {
+    using (ApplicationContext db = new ApplicationContext())
+      return db.Votes.ToList();
+  }
+
+  public static List<Answer> LoadAnswers(Vote concrete_vote)
+  {
+    using (ApplicationContext db = new ApplicationContext())
+      return db.Answers.Where(answer => answer.VoteID == concrete_vote.ID).ToList();
+  }
 }
