@@ -30,6 +30,7 @@ public static class Settings
   {
     window.Width = WindowWidth;
     window.Height = WindowHeight;
+    window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
     SetWindowsColor(window);
 
     if (IsResizableWindow)
