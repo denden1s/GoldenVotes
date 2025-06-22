@@ -11,7 +11,6 @@ namespace Golden_votes.Views;
 
 public partial class AdminWindow : Window
 {
-  private int VoteNameLength = 50;
   private VoteCreateWindow vote_window;
   private List<User> users;
   private List<Vote> votes;
@@ -56,8 +55,8 @@ public partial class AdminWindow : Window
     VotesList.Items.Clear();
     foreach (var vote in votes)
     {
-      int len = VoteNameLength < vote.Name.Length ? VoteNameLength : vote.Name.Length;
-      string name = len == VoteNameLength ? vote.Name.Substring(0, VoteNameLength) + "..." :
+      int len = Settings.VoteNameLength < vote.Name.Length ? Settings.VoteNameLength : vote.Name.Length;
+      string name = len == Settings.VoteNameLength ? vote.Name.Substring(0, Settings.VoteNameLength) + "..." :
                                             vote.Name;
       VotesList.Items.Add(name);
 
@@ -185,7 +184,7 @@ public partial class AdminWindow : Window
   {
     if (VotesList.SelectedItem is string selected)
     {
-      string name = selected.Contains("...") ? selected.Substring(0, VoteNameLength) : selected;
+      string name = selected.Contains("...") ? selected.Substring(0, Settings.VoteNameLength) : selected;
       var vote = votes.Where(vote => vote.Name.Contains(name)).FirstOrDefault();
       if (vote != null)
       {
