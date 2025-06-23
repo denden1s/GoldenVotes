@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Golden_votes.Entities;
 using Golden_votes.Utils;
 
@@ -11,8 +13,11 @@ namespace Golden_votes.Views;
 public partial class UserWindow : Window
 {
   private Chart pieChart;
+  private Vote selected_vote;
   private User user;
   private List<Vote> votes;
+  private List<RadioButton> radio_answers;
+
 
   public UserWindow(User user)
   {
@@ -26,27 +31,33 @@ public partial class UserWindow : Window
     this.user.LoadAnswers();
     VoteButton.IsEnabled = false;
     votes = ApplicationContext.LoadActualVotes();
+    selected_vote = new Vote();
+    radio_answers = new List<RadioButton>();
     foreach (var vote in votes)
       vote.LoadAnswers();
     LoadVotesInListBox();
-    TestAnswers();
-    TestAnswers();
-    TestAnswers();
-    TestAnswers();
-    TestAnswers();
-    TestAnswers();
-    TestAnswers();
   }
 
-  private void TestAnswers()
+  private void LoadRadioButtons(List<Answer> answers)
   {
-    var textBox = new RadioButton
+    AnswersPanel.Children.Clear();
+    radio_answers.Clear();
+    bool isVoted = user.Answers.Where(answer => answer.VoteID == answers.First().VoteID).Count() != 0;
+    foreach (var answer in answers)
     {
-      GroupName = "Answer",
-      Content = "test",
-      Margin = new Thickness(5, 0, 0, 5)
-    };
-    AnswersPanel.Children.Add(textBox);
+      var radioButton = new RadioButton
+      {
+        GroupName = "Answer",
+        Content = answer.Name,
+        Margin = new Thickness(5, 0, 0, 5)
+      };
+      if (user.Answers.Where(ans => ans.Name == answer.Name && ans.VoteID == answer.VoteID).Count() != 0)
+        radioButton.IsChecked = true;
+
+      AnswersPanel.Children.Add(radioButton);
+      radio_answers.Add(radioButton);
+    }
+    AnswersPanel.IsEnabled = VoteButton.IsEnabled = !isVoted;
   }
 
   private void LoadVotesInListBox()
@@ -71,12 +82,32 @@ public partial class UserWindow : Window
       var vote = votes.Where(vote => vote.Name.Contains(name)).FirstOrDefault();
       if (vote != null)
       {
+        selected_vote = vote;
         VoteQuestion.Text = vote.Name;
         LoadPieChart(vote.Answers);
+        LoadRadioButtons(vote.Answers);
         EndDate.Text = $"Дата завершения голосования: {vote.EndPeriod.ToShortDateString()}";
-        //VoteButton.IsEnabled = based on activity in this vote
       }
     }
+  }
+
+  private async void OnVoteButtonClick(object? sender, RoutedEventArgs e)
+  {
+    string answer_name = radio_answers.Where(rb => rb.IsChecked == true).FirstOrDefault().Content.ToString();
+    var result = await VariantMessageBox.Show(this, "Предупреждение",
+      $"Вы действительно хотите проголосовать за ответ {answer_name}");
+    if (result == false)
+    {
+      InfoMessageBox.Show(this, "Информация", "Голос отменен");
+      return;
+    }
+    Answer answer = selected_vote.Answers.Where(answer => answer.Name == answer_name).FirstOrDefault();
+    ApplicationContext.UpdateAnswer(answer, user);
+    answer.Users.Add(user);
+    user.LoadAnswers();
+    AnswersPanel.IsEnabled = false;
+    LoadPieChart(selected_vote.Answers);
+    VoteButton.IsEnabled = false;
   }
 
   private void LoadPieChart(List<Answer> answers)

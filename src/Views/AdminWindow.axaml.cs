@@ -132,7 +132,10 @@ public partial class AdminWindow : Window
     UsersList.Items.Remove(UsersList.SelectedItem);
     DeleteUserButton.IsEnabled = UsersList.Items.Count() != 0;
     InfoMessageBox.Show(this, "Информация", "Пользователь успешно удален");
-
+    votes = ApplicationContext.LoadVotes();
+    foreach (var vote in votes)
+      vote.LoadAnswers();
+    LoadVotesInListBox();
   }
 
   private void OnUserCreateClick(object? sender, RoutedEventArgs e)

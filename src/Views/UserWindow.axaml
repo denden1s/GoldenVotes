@@ -24,7 +24,7 @@
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
           <ListBox Name="VotesList" Background="#9EAD99" SelectionChanged="VotesList_SelectionChanged"/>
-          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="VoteButton"/>
+          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="OnVoteButtonClick" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="VoteButton"/>
         </StackPanel>
 
         <!-- Статистика -->
