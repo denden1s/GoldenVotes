@@ -42,7 +42,6 @@ public class ApplicationContext : DbContext
   public static void GenerateContent()
   {
     // Users
-    return;
     List<User> users = new List<User>();
     users.Add(new User("di", "Pass@123"));
     users.Add(new User("ivan_ivanov", "Qwerty123!"));
@@ -85,7 +84,7 @@ public class ApplicationContext : DbContext
     using (ApplicationContext db = new ApplicationContext())
     {
       // TODO: delete in release
-      // db.Database.EnsureDeleted();
+      db.Database.EnsureDeleted();
 
       db.Database.EnsureCreated();
       if (db.Users.IsNullOrEmpty())
