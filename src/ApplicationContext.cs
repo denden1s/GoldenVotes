@@ -61,11 +61,9 @@ public class ApplicationContext : DbContext
                           DateTime.Now.AddDays(45));
 
     List<Answer> answers2 = new List<Answer>();
-    answers2.Add(new Answer("React",
-                            new List<User>() { users[0] })
-               );
-    answers2.Add(new Answer("Angular", new List<User>() { users[3] }));
-    answers2.Add(new Answer("Vue", new List<User>() { users[2] }));
+    answers2.Add(new Answer("React"));
+    answers2.Add(new Answer("Angular"));
+    answers2.Add(new Answer("Vue"));
     Vote vote2 = new Vote("Какой фреймворк вам нравится для веб-разработки?",
                           answers2,
                           DateTime.Now.AddDays(35));
