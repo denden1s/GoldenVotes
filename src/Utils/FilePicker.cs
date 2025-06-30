@@ -7,30 +7,20 @@ namespace Golden_votes.Utils;
 
 public class FileService
 {
-  private readonly Window _targetWindow;
+  private readonly Window _kTargetWindow;
 
-  public FileService(Window targetWindow)
-  {
-      _targetWindow = targetWindow;
-  }
+  public FileService(Window targetWindow) => _kTargetWindow = targetWindow;
 
   public async Task<string?> OpenFilePickerAsync()
   {
-    // Получаем сервис для работы с файлами
-    var storageProvider = _targetWindow.StorageProvider;
-
-    // Настраиваем параметры диалога
+    var storageProvider = _kTargetWindow.StorageProvider;
     var options = new FilePickerOpenOptions
     {
       Title = "Выберите файл",
-      AllowMultiple = false, // Разрешаем выбор только одного файла
-      FileTypeFilter = null // Отключаем фильтрацию по типам файлов
+      AllowMultiple = false,
+      FileTypeFilter = null
     };
-
-    // Открываем диалог выбора файла
     var files = await storageProvider.OpenFilePickerAsync(options);
-
-    // Возвращаем путь к первому выбранному файлу (или null, если файл не выбран)
     return files?.FirstOrDefault()?.Path?.LocalPath;
   }
 }

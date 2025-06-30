@@ -5,11 +5,9 @@
         Icon="../Assets/icon.png"
         Title="Golden Votes"
         WindowStartupLocation="CenterScreen">
-  
-  <!-- Global drop-shadow effect -->
 
-  <!-- Darkened background to focus the login card -->
   <Grid Background="#CDC6A5">
+
     <Button Name="TopRightButton"
             Content="Сервер"
             HorizontalAlignment="Right"
@@ -18,43 +16,47 @@
             Background="#F0DCCA"
             Foreground="White"
             CornerRadius="4"
-            Click="SetupServerLocation" />
+            Click="SetupServerLocation"/>
+
     <Border Background="#696D7D"
             CornerRadius="16"
             Padding="24"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Effect="{StaticResource CardShadow}">
+
       <StackPanel Name="LoginPanel" Spacing="20">
-        <!-- Header -->
+
         <TextBlock Text="Авторизация"
                    FontSize="22"
                    FontWeight="SemiBold"
                    HorizontalAlignment="Center"
-                   Foreground="White" />
+                   Foreground="White"/>
 
-        <!-- Login field -->
         <StackPanel Spacing="6">
+
           <TextBlock Text="Логин"
                      FontSize="14"
-                     Foreground="White" />
+                     Foreground="White"/>
+
           <TextBox Name="LoginTextBox"
                    Watermark="Введите логин"
-                   Height="32" />
+                   Height="32"/>
+
         </StackPanel>
 
-        <!-- Password field -->
         <StackPanel Spacing="6">
+
           <TextBlock Text="Пароль"
                      FontSize="14"
-                     Foreground="White" />
+                     Foreground="White"/>
+
           <TextBox Name="PasswordTextBox"
                    Watermark="Введите пароль"
                    PasswordChar="●"
-                   Height="32" />
+                   Height="32"/>
         </StackPanel>
 
-        <!-- Login button -->
         <Button Name="LoginButton"
                 Content="Войти"
                 FontSize="16"
@@ -64,7 +66,7 @@
                 Background="#F0DCCA"
                 Foreground="White"
                 CornerRadius="8"
-                Click="OnLoginClick" />
+                Click="OnLoginClick"/>
 
         <Button Name="RegisterButton"
                 Content="Зарегистрироваться"
@@ -75,7 +77,8 @@
                 Background="#F0DCCA"
                 Foreground="White"
                 CornerRadius="8"
-                Click="OnRegisterClick" />
+                Click="OnRegisterClick"/>
+
       </StackPanel>
     </Border>
   </Grid>

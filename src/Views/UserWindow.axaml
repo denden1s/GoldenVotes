@@ -16,34 +16,48 @@
     <TabItem Header="Голосования">
       <Grid Margin="10">
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2*" />
-          <ColumnDefinition Width="3*" />
+          <ColumnDefinition Width="2*"/>
+          <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Список голосований -->
         <StackPanel>
           <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList" Background="#9EAD99" SelectionChanged="VotesList_SelectionChanged"/>
-          <Button Content="Проголосовать" HorizontalAlignment="Stretch" Click="OnVoteButtonClick" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="VoteButton"/>
+
+          <ListBox Name="VotesList"
+                   Background="#9EAD99"
+                   SelectionChanged="VotesList_SelectionChanged"/>
+
+          <Button Content="Проголосовать"
+                  HorizontalAlignment="Stretch"
+                  Click="OnVoteButtonClick"
+                  HorizontalContentAlignment="Center"
+                  Background="#F0DCCA"
+                  Name="VoteButton"/>
+
         </StackPanel>
 
-        <!-- Статистика -->
-       <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" >
-        <StackPanel>
-            <TextBlock Text="Вопрос для голосования"
-                       Name="VoteQuestion"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,10" />
-            <lvc:PieChart x:Name="PieStat"
-                          HorizontalAlignment="Center"/>
-          <TextBlock Name="EndDate" FontWeight="Bold" Margin="5,0,0,5" />
-            <ScrollViewer Height="180">
-              <StackPanel Name="AnswersPanel" Spacing="10"/>
-            </ScrollViewer>
-        </StackPanel>
-      </Border>
+        <Border Grid.Column="1"
+                Margin="10,0,0,0"
+                BorderBrush="#6F9283"
+                BorderThickness="1"
+                CornerRadius="10">
+
+          <StackPanel>
+
+              <TextBlock Text="Вопрос для голосования"
+                        Name="VoteQuestion"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,10"/>
+
+              <lvc:PieChart x:Name="PieStat" HorizontalAlignment="Center"/>
+            <TextBlock Name="EndDate" FontWeight="Bold" Margin="5,0,0,5" />
+              <ScrollViewer Height="180">
+                <StackPanel Name="AnswersPanel" Spacing="10"/>
+              </ScrollViewer>
+          </StackPanel>
+        </Border>
       </Grid>
     </TabItem>
   </TabControl>

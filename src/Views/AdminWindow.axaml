@@ -10,74 +10,111 @@
   <TabControl>
     <TabControl.Styles>
       <Style Selector="TabItem:selected /template/ Border#PART_SelectedPipe">
-			<Setter Property="Background" Value="#6F9283"/>
-		</Style>
+			  <Setter Property="Background" Value="#6F9283"/>
+		  </Style>
     </TabControl.Styles>
-    <!-- Вкладка: Голосования -->
+
     <TabItem Header="Голосования">
       <Grid Margin="10">
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2*" />
-          <ColumnDefinition Width="3*" />
+          <ColumnDefinition Width="2*"/>
+          <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Список голосований -->
         <StackPanel>
-          <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="VotesList" Background="#9EAD99" SelectionChanged="VotesList_SelectionChanged"/>
-          <Button Content="Создать" HorizontalAlignment="Stretch" Click="OnVoteCreateClick" HorizontalContentAlignment="Center" Background="#F0DCCA"/>
+          <TextBlock Text="Голосования:" FontWeight="Bold" Margin="0,0,0,5"/>
+
+          <ListBox Name="VotesList"
+                   Background="#9EAD99"
+                   SelectionChanged="VotesList_SelectionChanged"/>
+
+          <Button Content="Создать"
+                  HorizontalAlignment="Stretch"
+                  Click="OnVoteCreateClick"
+                  HorizontalContentAlignment="Center"
+                  Background="#F0DCCA"/>
+
         </StackPanel>
 
-        <!-- Статистика -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" >
-        <StackPanel>
-            <TextBlock Text="Вопрос для голосования"
-                       Name="VoteQuestion"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,10" />
-            <lvc:PieChart x:Name="PieStat"
-                          HorizontalAlignment="Center"/>
-        </StackPanel>
-      </Border>
+        <Border Grid.Column="1"
+                Margin="10,0,0,0"
+                BorderBrush="#6F9283"
+                BorderThickness="1"
+                CornerRadius="10">
+
+          <StackPanel>
+
+              <TextBlock Text="Вопрос для голосования"
+                         Name="VoteQuestion"
+                         FontSize="20"
+                         FontWeight="Bold"
+                         HorizontalAlignment="Center"
+                         Margin="0,0,0,10"/>
+
+              <lvc:PieChart x:Name="PieStat" HorizontalAlignment="Center"/>
+          </StackPanel>
+        </Border>
       </Grid>
     </TabItem>
 
-    <!-- Вкладка: Пользователи -->
     <TabItem Header="Пользователи">
       <Grid Margin="10">
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="2*" />
-          <ColumnDefinition Width="3*" />
+          <ColumnDefinition Width="2*"/>
+          <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Список пользователей -->
         <StackPanel>
-          <TextBlock Text="Пользователи:" FontWeight="Bold" Margin="0,0,0,5" />
-          <ListBox Name="UsersList" Background="#9EAD99" />
+          <TextBlock Text="Пользователи:" FontWeight="Bold" Margin="0,0,0,5"/>
+          <ListBox Name="UsersList" Background="#9EAD99"/>
           <StackPanel Orientation="Vertical">
-              <Button Content="Загрузить ключ" HorizontalAlignment="Stretch" Click="OnLoadKeyClick" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="LoadKeyButton"/>
-              <Button Content="Удалить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#F0DCCA" Name="DeleteUserButton" Click="OnDeleteUserButton"/>
+
+            <Button Content="Загрузить ключ"
+                    HorizontalAlignment="Stretch"
+                    Click="OnLoadKeyClick"
+                    HorizontalContentAlignment="Center"
+                    Background="#F0DCCA"
+                    Name="LoadKeyButton"/>
+
+            <Button Content="Удалить"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Background="#F0DCCA"
+                    Name="DeleteUserButton"
+                    Click="OnDeleteUserButton"/>
+
           </StackPanel>
         </StackPanel>
 
-        <!-- Форма создания пользователя -->
-        <Border Grid.Column="1" Margin="10,0,0,0" BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Padding="10">
+        <Border Grid.Column="1"
+                Margin="10,0,0,0"
+                BorderBrush="#6F9283"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="10">
+
           <StackPanel Spacing="10">
-            <TextBlock Text="Логин" />
-            <TextBox Name="UserLoginTextBox" />
+            <TextBlock Text="Логин"/>
+            <TextBox Name="UserLoginTextBox"/>
+            <TextBlock Text="Пароль"/>
+            <TextBox PasswordChar="●" Name="UserPasswordTextBox"/>
+            <TextBlock Text="Роль пользователя"/>
 
-            <TextBlock Text="Пароль" />
-            <TextBox PasswordChar="●" Name="UserPasswordTextBox" />
+            <ComboBox SelectedIndex="0"
+                      HorizontalAlignment="Stretch"
+                      Name="UserRoleComboBox">
 
-            <TextBlock Text="Роль пользователя" />
-            <ComboBox SelectedIndex="0" HorizontalAlignment="Stretch" Name="UserRoleComboBox">
-              <ComboBoxItem Content="Пользователь" />
-              <ComboBoxItem Content="Администратор" />
+              <ComboBoxItem Content="Пользователь"/>
+              <ComboBoxItem Content="Администратор"/>
             </ComboBox>
 
-            <Button Content="Создать" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#F0DCCA" Click="OnUserCreateClick" Name="UserCreateButton"/>
+            <Button Content="Создать"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Background="#F0DCCA"
+                    Click="OnUserCreateClick"
+                    Name="UserCreateButton"/>
+
           </StackPanel>
         </Border>
       </Grid>

@@ -1,39 +1,38 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
+using Microsoft.IdentityModel.Tokens;
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using Golden_votes.Entities;
 using Golden_votes.Utils;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Golden_votes.Views;
 
 public partial class VoteCreateWindow : Window
 {
-  private AdminWindow parentWindow;
-  private int answers_count = 1;
+  private AdminWindow _parentWindow;
+  private int _answersCount = 1;
   public VoteCreateWindow(AdminWindow win)
   {
     InitializeComponent();
     Settings.ConfigureWindow(this);
-    parentWindow = win;
+    _parentWindow = win;
   }
   private void CloseWindow()
   {
-    parentWindow.Show();
+    _parentWindow.Show();
     this.Hide();
   }
-  private void OnWindowClosing(object? sender, WindowClosingEventArgs e)
-  {
-    CloseWindow();
-  }
+  private void OnWindowClosing(object? sender, WindowClosingEventArgs e) => CloseWindow();
 
   private async void OnSubmitVote(object? sender, RoutedEventArgs e)
   {
+    List<Answer> answers;
+    Vote vote;
     if (AnswersPanel.Children.Count < 2)
     {
       InfoMessageBox.Show(this, "Ошибка", "В голосовании должно быть минимум два варианта ответа");
@@ -44,6 +43,7 @@ public partial class VoteCreateWindow : Window
       InfoMessageBox.Show(this, "Ошибка", "Название голосования не установлено");
       return;
     }
+
     foreach (TextBox answer in AnswersPanel.Children)
     {
       if (answer.Text.IsNullOrEmpty())
@@ -52,6 +52,7 @@ public partial class VoteCreateWindow : Window
         return;
       }
     }
+
     if (EndDate.SelectedDate == null)
     {
       InfoMessageBox.Show(this, "Ошибка", "Не установлена дата окончания голосования");
@@ -64,39 +65,41 @@ public partial class VoteCreateWindow : Window
     }
 
     if (StartDate.SelectedDate != null &&
-          (StartDate.SelectedDate.Value.DateTime.Day < DateTime.Now.Day ||
-           StartDate.SelectedDate.Value.DateTime > EndDate.SelectedDate.Value.DateTime))
+       (StartDate.SelectedDate.Value.DateTime.Day < DateTime.Now.Day ||
+        StartDate.SelectedDate.Value.DateTime > EndDate.SelectedDate.Value.DateTime))
     {
       InfoMessageBox.Show(this, "Ошибка", "Дата начала голосования установлена некорректно");
       return;
     }
 
-
-    List<Answer> answers = new List<Answer>();
+    answers = new List<Answer>();
     foreach (TextBox answer in AnswersPanel.Children)
     {
-      if (answers.Where(ans => ans.Name == answer.Text).Count() != 0)
+      if (answers.Where(ans => ans.Name == answer.Text).Any())
       {
         InfoMessageBox.Show(this, "Ошибка", "Ответы повторяются");
         return;
       }
       answers.Add(new Answer(answer.Text));
     }
-      Vote vote = (StartDate.SelectedDate != null) ? new Vote(AnswerBox.Text, answers, EndDate.SelectedDate.Value.DateTime, StartDate.SelectedDate.Value.DateTime) :
-                                                     new Vote(AnswerBox.Text, answers, EndDate.SelectedDate.Value.DateTime);
-    var vote_add = await VariantMessageBox.Show(this, "Предупреждение", $"Вы действительно хотите добавить голосование '{AnswerBox.Text}'?");
-    if (vote_add == false)
+    vote = (StartDate.SelectedDate != null) ? new Vote(AnswerBox.Text, answers,
+                                                       EndDate.SelectedDate.Value.DateTime,
+                                                       StartDate.SelectedDate.Value.DateTime) :
+                                              new Vote(AnswerBox.Text, answers, EndDate.SelectedDate.Value.DateTime);
+    var vote_add = await VariantMessageBox.Show(this, "Предупреждение",
+                                                $"Вы действительно хотите добавить голосование '{AnswerBox.Text}'?");
+    if (!vote_add)
     {
       InfoMessageBox.Show(this, "Информация", "Добавление голосования было отменено");
       return;
     }
-    // if () // TODO: ask about adding because cant remove it, after question add + show message + close form
-    // else no clear and show message about
-    if (ApplicationContext.AddVote(vote) == false)
+  
+    if (!ApplicationContext.AddVote(vote))
     {
       InfoMessageBox.Show(this, "Ошибка", "Добавление голосования прошло неудачно - такое голосование уже есть в системе");
       return;
     }
+
     InfoMessageBox.Show(this, "Информация", "Добавление голосования прошло успешно", () =>
     {
       CloseWindow();
@@ -107,19 +110,19 @@ public partial class VoteCreateWindow : Window
   {
     var textBox = new TextBox
     {
-      Watermark = $"Вариант {answers_count}",
+      Watermark = $"Вариант {_answersCount}",
       Margin = new Thickness(0, 0, 0, 5)
     };
     AnswersPanel.Children.Add(textBox);
-    answers_count++;
+    _answersCount++;
   }
-  
+
   private void OnDelTextBoxClick(object? sender, RoutedEventArgs e)
   {
     if (AnswersPanel.Children.Count > 0)
     {
       AnswersPanel.Children.RemoveAt(AnswersPanel.Children.Count - 1);
-      answers_count--;
+      _answersCount--;
     }
   }
 }

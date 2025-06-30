@@ -6,57 +6,74 @@
 
   <Border Padding="30" VerticalAlignment="Center">
     <StackPanel Spacing="20">
-      
-      <!-- Заголовок -->
+
       <TextBlock Text="Голосование"
                  FontSize="20"
                  FontWeight="Bold"
                  HorizontalAlignment="Center"/>
 
-      <!-- Вопрос голосования -->
       <TextBox Name="AnswerBox"
                Watermark="Какой язык программирования самый простой?"
                FontSize="16"
                Height="40"/>
 
-      <!-- Ответы -->
       <StackPanel>
+
         <TextBlock Text="Ответы"
                    FontSize="16"
                    FontWeight="Bold"
                    Margin="0,0,0,10"/>
 
-        <!-- Ограничение высоты + прокрутка -->
-        <Border BorderBrush="#6F9283" BorderThickness="1" CornerRadius="10" Padding="10" Height="200">
+        <Border BorderBrush="#6F9283"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="10"
+                Height="200">
+
           <ScrollViewer>
             <StackPanel Name="AnswersPanel" Spacing="10"/>
           </ScrollViewer>
         </Border>
 
-        <!-- Кнопка добавления -->
-        <Button Content="+" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Background="#F0DCCA" Click="OnAddTextBoxClick"/>
-        <Button Content="-" Width="40" Margin="0,10,0,0" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Background="#F0DCCA" Click="OnDelTextBoxClick"/>
+        <Button Content="+"
+                Width="40"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Center"
+                Background="#F0DCCA"
+                Click="OnAddTextBoxClick"/>
+
+        <Button Content="-"
+                Width="40"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Center"
+                Background="#F0DCCA"
+                Click="OnDelTextBoxClick"/>
+
       </StackPanel>
 
-      <!-- Период голосования -->
       <StackPanel>
+
         <TextBlock Text="Период голосования"
                    FontSize="16"
                    FontWeight="Bold"
                    Margin="0,10,0,10"/>
+
         <StackPanel Orientation="Horizontal" Spacing="40">
           <StackPanel>
             <TextBlock Text="Начало"/>
             <DatePicker Name="StartDate" DayFormat="ddd dd"/>
           </StackPanel>
+
           <StackPanel>
             <TextBlock Text="Окончание"/>
             <DatePicker Name="EndDate" DayFormat="ddd dd" />
           </StackPanel>
         </StackPanel>
+
       </StackPanel>
 
-      <!-- Кнопка отправки -->
       <Button Content="Добавить голосование"
               HorizontalContentAlignment="Center"
               FontSize="16"
@@ -66,6 +83,7 @@
               HorizontalAlignment="Stretch"
               CornerRadius="8"
               Click="OnSubmitVote"/>
+
     </StackPanel>
   </Border>
 </Window>

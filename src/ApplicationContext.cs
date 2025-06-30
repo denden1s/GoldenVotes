@@ -10,20 +10,19 @@ namespace Golden_votes;
 
 public class ApplicationContext : DbContext
 {
-  private string ip;
+  private string _ip;
   public ApplicationContext()
   {
     DBServer server = new DBServer();
-    ip = server.IP;
+    _ip = server.IP;
   }
   public DbSet<User> Users { get; set; }
   public DbSet<Answer> Answers { get; set; }
-
   public DbSet<Vote> Votes { get; set; }
 
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    optionsBuilder.UseSqlServer("Server=" + ip + "\\SQLEXPRESS;" +
+    optionsBuilder.UseSqlServer("Server=" + _ip + "\\SQLEXPRESS;" +
         "Database=golden_votes;Trusted_Connection=True;TrustServerCertificate=true;");
   }
   protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,7 +34,6 @@ public class ApplicationContext : DbContext
     modelBuilder.Entity<Answer>().HasMany(Answer => Answer.Users);
 
     modelBuilder.Entity<Vote>().HasKey(vote => vote.ID);
-
     modelBuilder.Entity<Vote>().HasMany(vote => vote.Answers);
   }
 
@@ -44,7 +42,7 @@ public class ApplicationContext : DbContext
     // Users
     using (ApplicationContext db = new ApplicationContext())
     {
-      if ((db.Votes.IsNullOrEmpty() && db.Answers.IsNullOrEmpty() && db.Users.Count() == 1) == false)
+      if (!(db.Votes.IsNullOrEmpty() && db.Answers.IsNullOrEmpty() && db.Users.Count() == 1))
         return;
     }
     List<User> users = new List<User>();
@@ -58,7 +56,7 @@ public class ApplicationContext : DbContext
     List<Answer> answers1 = new List<Answer>();
     answers1.Add(new Answer("C#",
                             new List<User>() { users[0], users[1], users[2] })
-               );
+                );
     answers1.Add(new Answer("Python", new List<User>() { users[3] }));
     answers1.Add(new Answer("Pascal"));
     Vote vote1 = new Vote("Какой язык программирования вы предпочитаете для бэкенда?",
@@ -86,8 +84,9 @@ public class ApplicationContext : DbContext
   {
     using (ApplicationContext db = new ApplicationContext())
     {
-      // TODO: delete in release
-      // db.Database.EnsureDeleted();
+#if DEBUG
+      db.Database.EnsureDeleted();
+#endif
 
       db.Database.EnsureCreated();
       if (db.Users.IsNullOrEmpty())
@@ -96,6 +95,9 @@ public class ApplicationContext : DbContext
         db.SaveChanges();
       }
     }
+#if DEBUG
+    GenerateContent();
+#endif
   }
 
   public static List<User> LoadUsers(User.UserRole role = User.UserRole.kBaseUser)
@@ -107,10 +109,7 @@ public class ApplicationContext : DbContext
   public static List<User> LoadUsers(Answer answer)
   {
     using (ApplicationContext db = new ApplicationContext())
-    {
-      // List<User> users = db.Users.Where(user => user.Role == User.UserRole.kBaseUser).ToList();
       return db.Answers.Include(a => a.Users).FirstOrDefault(user => user.ID == answer.ID).Users;
-    }
   }
 
   public static bool DeleteUser(string user_id)
@@ -187,7 +186,7 @@ public class ApplicationContext : DbContext
     return true;
   }
 
-    public static bool UpdateAnswer(Answer answer, User user)
+  public static bool UpdateAnswer(Answer answer, User user)
   {
     using (ApplicationContext db = new ApplicationContext())
     {
@@ -195,11 +194,9 @@ public class ApplicationContext : DbContext
       var ans = db.Answers.Where(a => a.ID == answer.ID).First();
       var ansUsr = db.Answers.Where(a => a.ID == answer.ID).First().Users;
       ans.Users = new List<User> { usr };
-      // ans.Users.Add(usr);
       db.Answers.Update(ans);
       db.SaveChanges();
     }
     return true;
   }
-  
 }

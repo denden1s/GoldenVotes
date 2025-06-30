@@ -1,13 +1,10 @@
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using System.Linq;
+
 using Golden_votes.Entities;
 using Golden_votes.Utils;
 using Golden_votes.Utils.MessageBox;
-
-using Tmds.DBus.Protocol;
 
 namespace Golden_votes.Views;
 
@@ -17,34 +14,34 @@ public partial class LoginWindow : Window
   {
     InitializeComponent();
     Settings.ConfigureWindow(this);
-    this.LoginPanel.Width = this.Width / 3;
-    this.LoginPanel.Height = this.Height / 2.8;
-    this.LoginButton.Width = this.LoginPanel.Width;
+    LoginPanel.Width = Width / 3;
+    LoginPanel.Height = Height / 2.8;
+    LoginButton.Width = LoginPanel.Width;
   }
 
-  private async void OnLoginClick(object? sender, RoutedEventArgs e)
+  private void OnLoginClick(object? sender, RoutedEventArgs e)
   {
-    // setup ip of server from json
-    // TODO: realize
     if (string.IsNullOrEmpty(LoginTextBox.Text) ||
         string.IsNullOrEmpty(PasswordTextBox.Text))
     {
       InfoMessageBox.Show(this, "Информация", "Необходимо ввести логин и пароль!");
       return;
     }
+
     User user = new User(LoginTextBox.Text, PasswordTextBox.Text);
-    User? tpm_user;
+    User? tpmUser;
+
     using (ApplicationContext db = new ApplicationContext())
     {
-      tpm_user = db.Users.Where(u => u.ID == user.ID).FirstOrDefault();
-      if (tpm_user == null)
+      tpmUser = db.Users.Where(u => u.ID == user.ID).FirstOrDefault();
+      if (tpmUser == null)
       {
         InfoMessageBox.Show(this, "Ошибка", $"Пользователь {LoginTextBox.Text} отсутствует в системе");
         return;
       }
-      user.Role = tpm_user.Role;
+      user.Role = tpmUser.Role;
     }
-    if (user.Password != tpm_user.Password)
+    if (user.Password != tpmUser.Password)
     {
       InfoMessageBox.Show(this, "Ошибка", "Введен неверный пароль");
       return;
@@ -52,19 +49,18 @@ public partial class LoginWindow : Window
     Window childWindow = user.Role == User.UserRole.kBaseUser ? new UserWindow(user) :
                                                                 new AdminWindow();
     childWindow.Show();
-    this.Hide();
+    Hide();
   }
 
-  private async void OnRegisterClick(object? sender, RoutedEventArgs e)
+  private void OnRegisterClick(object? sender, RoutedEventArgs e)
   {
-    // setup ip of server from json
-    // TODO: realize
     if (string.IsNullOrEmpty(LoginTextBox.Text) ||
         string.IsNullOrEmpty(PasswordTextBox.Text))
     {
       InfoMessageBox.Show(this, "Ошибка", "Необходимо ввести логин и пароль");
       return;
     }
+
     if (ApplicationContext.AddUser(new User(LoginTextBox.Text, PasswordTextBox.Text)))
       InfoMessageBox.Show(this, "Информация", "Регистрация прошла успешно");
     else

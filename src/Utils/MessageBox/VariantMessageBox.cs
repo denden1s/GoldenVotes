@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
 using System.Threading.Tasks;
@@ -13,8 +12,8 @@ public class VariantMessageBox : Window
 
   public VariantMessageBox(string title, string message)
   {
-    this.Title = title;
-    this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+    Title = title;
+    WindowStartupLocation = WindowStartupLocation.CenterOwner;
     Settings.SetWindowsColor(this);
 
     var panel = new StackPanel
@@ -43,6 +42,7 @@ public class VariantMessageBox : Window
       Width = 80,
       Background = Settings.CreateColor("#F0DCCA")
     };
+
     yesButton.Click += (s, e) => { Result = true; Close(); };
 
     var noButton = new Button
@@ -51,6 +51,7 @@ public class VariantMessageBox : Window
       Width = 80,
       Background = Settings.CreateColor("#F0DCCA")
     };
+
     noButton.Click += (s, e) => { Result = false; Close(); };
 
     buttonPanel.Children.Add(yesButton);

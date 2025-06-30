@@ -1,10 +1,9 @@
-using System;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
+using System.Threading.Tasks;
 
 namespace Golden_votes.Utils.MessageBox;
 
@@ -15,7 +14,6 @@ public class InputMessageBox : Window
 
   public InputMessageBox(string title, string watermark)
   {
-    // Window setup
     Title = title;
     Width = 350;
     Height = 160;
@@ -23,7 +21,6 @@ public class InputMessageBox : Window
     Settings.SetWindowsColor(this);
     CanResize = false;
 
-    // Create controls
     _inputBox = new TextBox
     {
       Watermark = watermark,
@@ -38,6 +35,7 @@ public class InputMessageBox : Window
       Margin = new Thickness(0, 0, 5, 0),
       Background = Settings.CreateColor("#F0DCCA")
     };
+
     okButton.Click += Ok_Click;
 
     var cancelButton = new Button
@@ -46,9 +44,9 @@ public class InputMessageBox : Window
       Width = 80,
       Background = Settings.CreateColor("#F0DCCA")
     };
+
     cancelButton.Click += Cancel_Click;
 
-    // Layout
     var buttonPanel = new StackPanel
     {
       Orientation = Orientation.Horizontal,
@@ -56,6 +54,7 @@ public class InputMessageBox : Window
       Margin = new Thickness(10),
       Spacing = 10
     };
+
     buttonPanel.Children.AddRange(new[] { okButton, cancelButton });
 
     var mainPanel = new StackPanel
@@ -74,12 +73,12 @@ public class InputMessageBox : Window
     Close(true);
   }
 
-  private void Cancel_Click(object sender, RoutedEventArgs e)
-  {
-    Close(false);
-  }
+  private void Cancel_Click(object sender, RoutedEventArgs e) => Close(false);
 
-  public static Task<string> Show(Window parent, string title = "Input", string watermark = "Write text", string message = null)
+  public static Task<string> Show(Window parent,
+                                  string title = "Input",
+                                  string watermark = "Write text",
+                                  string message = null)
   {
     var dialog = new InputMessageBox(title, watermark);
 

@@ -1,93 +1,86 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using Golden_votes.Entities;
 using Golden_votes.Utils;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Golden_votes.Views;
 
 public partial class AdminWindow : Window
 {
-  private VoteCreateWindow vote_window;
-  private List<User> users;
-  private List<Vote> votes;
-
-  private Encryption? encryption;
-
-  private bool first_load = true;
-
-  private Chart pieChart;
+  private List<User> _users;
+  private List<Vote> _votes;
+  private Encryption? _encryption;
+  private bool _firstLoad = true;
+  private Chart _pieChart;
 
   private void LoadPieChart(List<Answer> answers)
   {
-    if (pieChart == null || answers.Count() == 0)
+    if (_pieChart == null || answers.Count() == 0)
       return;
 
-    pieChart.LoadData(answers);
+    _pieChart.LoadData(answers);
   }
 
   public AdminWindow()
   {
     InitializeComponent();
     Settings.ConfigureWindow(this);
-    VotesList.Height = UsersList.Height = this.Height * 0.8;
-    PieStat.Width = this.Width * 0.6;
-    PieStat.Height = this.Height * 0.8;
-    encryption = null;
+    VotesList.Height = UsersList.Height = Height * 0.8;
+    PieStat.Width = Width * 0.6;
+    PieStat.Height = Height * 0.8;
+    _encryption = null;
     DeleteUserButton.IsEnabled = false;
     UserCreateButton.IsEnabled = false;
-    pieChart = new Chart(ref PieStat);
+    _pieChart = new Chart(ref PieStat);
 
     UsersList.Items.Add("Загрузите ключ для просмотра пользователей");
-    users = ApplicationContext.LoadUsers();
-    votes = ApplicationContext.LoadVotes();
-    foreach (var vote in votes)
+    _users = ApplicationContext.LoadUsers();
+    _votes = ApplicationContext.LoadVotes();
+
+    foreach (var vote in _votes)
       vote.LoadAnswers();
+
     LoadVotesInListBox();
-    first_load = false;
+    _firstLoad = false;
   }
 
   private void LoadVotesInListBox()
   {
+    int len;
+    string name;
     VotesList.Items.Clear();
-    foreach (var vote in votes)
+    foreach (var vote in _votes)
     {
-      int len = Settings.VoteNameLength < vote.Name.Length ? Settings.VoteNameLength : vote.Name.Length;
-      string name = len == Settings.VoteNameLength ? vote.Name.Substring(0, Settings.VoteNameLength) + "..." :
-                                            vote.Name;
+      len = Settings.kVoteNameLength < vote.Name.Length ? Settings.kVoteNameLength : vote.Name.Length;
+      name = len == Settings.kVoteNameLength ? vote.Name.Substring(0, Settings.kVoteNameLength) + "..." :
+                                               vote.Name;
       VotesList.Items.Add(name);
-
     }
   }
 
   private void LoadUsersInListBox()
   {
-    if (encryption == null)
+    if (_encryption == null)
       return;
 
-    users = ApplicationContext.LoadUsers();
     UsersList.Items.Clear();
-    List<string> users_logins = new List<string>();
-    foreach (var user in users)
-    {
-      string name = encryption.Decrypt(user.Login);
-      users_logins.Add(name);
-    }
-    users_logins = users_logins.OrderBy(x => x, StringComparer.OrdinalIgnoreCase).ToList();
-    foreach (var user in users_logins)
-    {
-      UsersList.Items.Add(user);
-    }
+    _users = ApplicationContext.LoadUsers();
+    foreach (var user in _users)
+      UsersList.Items.Add(_encryption.Decrypt(user.Login));
+
     DeleteUserButton.IsEnabled = UsersList.Items.Count() != 0;
   }
+
   private void OnVoteCreateClick(object? sender, RoutedEventArgs e)
   {
     VoteCreateWindow vote_window = new VoteCreateWindow(this);
     vote_window.Show();
-    this.Hide();
+    Hide();
   }
 
   private async void OnLoadKeyClick(object? sender, RoutedEventArgs e)
@@ -100,7 +93,7 @@ public partial class AdminWindow : Window
       InfoMessageBox.Show(this, "Ошибка", "Вы не выбрали файл!");
       return;
     }
-    encryption = new Encryption(privKeyPath);
+    _encryption = new Encryption(privKeyPath);
     LoadUsersInListBox();
     LoadKeyButton.IsEnabled = false;
     UserCreateButton.IsEnabled = true;
@@ -117,14 +110,14 @@ public partial class AdminWindow : Window
 
     var result = await VariantMessageBox.Show(this, "Предупреждение",
         $"Вы действительно хотите удалить пользователя {UsersList.SelectedItem.ToString()}");
-    if (result == false)
+    if (!result)
     {
       InfoMessageBox.Show(this, "Информация", "Удаление пользователя отменено");
       return;
     }
 
     User user = new User(UsersList.SelectedItem.ToString());
-    if (ApplicationContext.DeleteUser(user.ID) == false)
+    if (!ApplicationContext.DeleteUser(user.ID))
     {
       InfoMessageBox.Show(this, "Ошибка", "Удаление пользователя завершилось неудачно");
       return;
@@ -132,9 +125,10 @@ public partial class AdminWindow : Window
     UsersList.Items.Remove(UsersList.SelectedItem);
     DeleteUserButton.IsEnabled = UsersList.Items.Count() != 0;
     InfoMessageBox.Show(this, "Информация", "Пользователь успешно удален");
-    votes = ApplicationContext.LoadVotes();
-    foreach (var vote in votes)
+    _votes = ApplicationContext.LoadVotes();
+    foreach (var vote in _votes)
       vote.LoadAnswers();
+
     LoadVotesInListBox();
   }
 
@@ -150,9 +144,10 @@ public partial class AdminWindow : Window
       InfoMessageBox.Show(this, "Ошибка", "Введите пароль пользователя");
       return;
     }
-    User.UserRole role =
-      UserRoleComboBox.SelectedValue.ToString() == "Администратор" ? User.UserRole.kAdmin :
-                                                                     User.UserRole.kBaseUser;
+    string selectedUserRole = UserRoleComboBox.SelectedValue.ToString();
+    User.UserRole role = selectedUserRole == "Администратор" ? User.UserRole.kAdmin :
+                                                               User.UserRole.kBaseUser;
+
     if (ApplicationContext.AddUser(new User(UserLoginTextBox.Text, UserPasswordTextBox.Text, role)))
       InfoMessageBox.Show(this, "Информация", "Регистрация прошла успешно");
     else
@@ -162,24 +157,23 @@ public partial class AdminWindow : Window
     UserPasswordTextBox.Clear();
     LoadUsersInListBox();
   }
-  private void OnWindowClosing(object? sender, WindowClosingEventArgs e)
-  {
-    Environment.Exit(0);
-  }
+  private void OnWindowClosing(object? sender, WindowClosingEventArgs e) => Environment.Exit(0);
 
   protected override void OnOpened(EventArgs e)
   {
     base.OnOpened(e);
-    if (first_load)
+    if (_firstLoad)
       return;
-    votes = ApplicationContext.LoadVotes();
-    foreach (var vote in votes)
+
+    _votes = ApplicationContext.LoadVotes();
+    foreach (var vote in _votes)
       vote.LoadAnswers();
+
     LoadVotesInListBox();
   }
   public void CloseVoteWindow(VoteCreateWindow vote_win)
   {
-    this.Show();
+    Show();
     vote_win.Hide();
   }
 
@@ -187,8 +181,8 @@ public partial class AdminWindow : Window
   {
     if (VotesList.SelectedItem is string selected)
     {
-      string name = selected.Contains("...") ? selected.Substring(0, Settings.VoteNameLength) : selected;
-      var vote = votes.Where(vote => vote.Name.Contains(name)).FirstOrDefault();
+      string name = selected.Contains("...") ? selected.Substring(0, Settings.kVoteNameLength) : selected;
+      var vote = _votes.Where(vote => vote.Name.Contains(name)).FirstOrDefault();
       if (vote != null)
       {
         VoteQuestion.Text = vote.Name;

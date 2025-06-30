@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Golden_votes.Entities;
@@ -6,11 +5,8 @@ namespace Golden_votes.Entities;
 public class Answer
 {
   public int ID { get; set; }
-
   public int VoteID { get; set; }
-
   public string Name { get; set; }
-
   public List<User> Users { get; set; }
 
   public Answer() { }
@@ -21,8 +17,5 @@ public class Answer
       Users = users;
   }
 
-  public void LoadUsers()
-  {
-    Users = ApplicationContext.LoadUsers(this);
-  }
+  public void LoadUsers() => Users = ApplicationContext.LoadUsers(this);
 }

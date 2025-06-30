@@ -1,16 +1,16 @@
-using System.Security.Cryptography;
-using System.Text;
-using System.IO;
 using System;
+using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Golden_votes.Utils;
 
 public class Encryption
 {
-  private bool usePrivateKey = false;
+  private bool _usePrivateKey = false;
   // RSA 1024 bit pub key
-  private string privateKeyPem;
-  private static readonly byte[] publicKey = new byte[]
+  private string _privateKeyPem;
+  private readonly byte[] _kPublicKey = new byte[]
   {
     0x30, 0x81, 0x9e, 0x30, 0x0d, 0x06, 0x09, 0x2a,
     0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01,
@@ -35,27 +35,26 @@ public class Encryption
     0x01
   };
 
-  public Encryption()
-  {
-  }
+  public Encryption() { }
   public Encryption(string privateKeyPath)
   {
     using (StreamReader reader = new StreamReader(privateKeyPath))
     {
-      privateKeyPem = reader.ReadToEnd();
-      usePrivateKey = true;
+      _privateKeyPem = reader.ReadToEnd();
+      _usePrivateKey = true;
     }
   }
 
   public string Encrypt(string plainText)
   {
+    byte[] dataBytes, encryptedBytes;
     using var rsa = RSA.Create();
-    rsa.ImportSubjectPublicKeyInfo(publicKey, out _);
+    rsa.ImportSubjectPublicKeyInfo(_kPublicKey, out _);
 
-    byte[] dataBytes = Encoding.UTF8.GetBytes(plainText);
+    dataBytes = Encoding.UTF8.GetBytes(plainText);
     // Use OAEP padding with SHA-256 for security
-    byte[] encryptedBytes = rsa.Encrypt(dataBytes,
-                                        RSAEncryptionPadding.OaepSHA256);
+    encryptedBytes = rsa.Encrypt(dataBytes,
+                                 RSAEncryptionPadding.OaepSHA256);
 
     // Return as Base64 string for easy transport
     return Convert.ToBase64String(encryptedBytes);
@@ -63,16 +62,17 @@ public class Encryption
 
   public string Decrypt(string encryptedBase64)
   {
-    if (!usePrivateKey)
+    byte[] encryptedBytes, decryptedBytes;
+    if (!_usePrivateKey)
       return "";
 
-    byte[] encryptedBytes = Convert.FromBase64String(encryptedBase64);
+    encryptedBytes = Convert.FromBase64String(encryptedBase64);
 
     using var rsa = RSA.Create();
-    rsa.ImportFromPem(privateKeyPem);
+    rsa.ImportFromPem(_privateKeyPem);
 
-    byte[] decryptedBytes = rsa.Decrypt(encryptedBytes,
-                                        RSAEncryptionPadding.OaepSHA256);
+    decryptedBytes = rsa.Decrypt(encryptedBytes,
+                                 RSAEncryptionPadding.OaepSHA256);
 
     return Encoding.UTF8.GetString(decryptedBytes);
   }
