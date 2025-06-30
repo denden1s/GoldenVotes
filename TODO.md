@@ -4,3 +4,5 @@
 4. Remove unused usings
 5. Rewrite for MVVM app
 6. Try devcontainer (without mutex)
+7. Write start and end period for all user types
+8. Find more usability data picker (window datapicker realy bad)
